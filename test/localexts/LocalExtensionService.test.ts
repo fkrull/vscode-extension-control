@@ -67,6 +67,52 @@ suite("LocalExtensionService.syncLocalExtensions", () => {
         });
     });
 
+    test("should uninstall only unavailable extensions", () => {
+        const availableExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext3', path: 'path3' },
+        ];
+        const installedExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext2', path: 'path2' },
+            { name: 'ext3', path: 'path3' },
+        ];
+        const delta = [{ name: 'ext2', path: 'path2' }]
+        const provider = givenExtensions(availableExts, installedExts);
+        const installer = mock(Installer);
+        const localExtensionService = new LocalExtensionService(
+            instance(provider),
+            instance(installer)
+        );
+
+        return localExtensionService.syncLocalExtensions().then(() => {
+            verify(installer.install(deepEqual([]))).once();
+            verify(installer.uninstall(deepEqual(delta))).once();
+        });
+    });
+
+    test("should install and uninstall extensions", () => {
+        const availableExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext3', path: 'path3' },
+        ];
+        const installedExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext2', path: 'path2' },
+        ];
+        const provider = givenExtensions(availableExts, installedExts);
+        const installer = mock(Installer);
+        const localExtensionService = new LocalExtensionService(
+            instance(provider),
+            instance(installer)
+        );
+
+        return localExtensionService.syncLocalExtensions().then(() => {
+            verify(installer.install(deepEqual([{ name: 'ext3', path: 'path3' }]))).once();
+            verify(installer.uninstall(deepEqual([{ name: 'ext2', path: 'path2' }]))).once();
+        });
+    });
+
 });
 
 
