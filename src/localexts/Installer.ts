@@ -1,11 +1,11 @@
-import LocalExtension from "./LocalExtension";
+import LocalExtension from './LocalExtension';
 
 export default class Installer {
-    install(exts: Array<LocalExtension>): Promise<void> {
+    public install(exts: LocalExtension[]): Promise<void> {
         return Promise.resolve();
     }
 
-    uninstall(exts: Array<LocalExtension>): Promise<void> {
+    public uninstall(exts: LocalExtension[]): Promise<void> {
         return Promise.resolve();
     }
 }
