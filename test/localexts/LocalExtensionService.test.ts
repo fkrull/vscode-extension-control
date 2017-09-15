@@ -7,7 +7,7 @@ import LocalExtension from '../../src/localexts/LocalExtension';
 
 suite("LocalExtensionService.syncLocalExtensions", () => {
 
-    test("should install all available extensions", () => {
+    test("should install all available extensions if none are installed", () => {
         const availableExts = [
             { name: 'ext1', path: 'path1' },
             { name: 'ext2', path: 'path2' },
@@ -21,6 +21,7 @@ suite("LocalExtensionService.syncLocalExtensions", () => {
 
         return localExtensionService.syncLocalExtensions().then(() => {
             verify(installer.install(deepEqual(availableExts))).once();
+            verify(installer.uninstall(deepEqual([]))).once();
         });
     });
 
@@ -44,6 +45,25 @@ suite("LocalExtensionService.syncLocalExtensions", () => {
 
         return localExtensionService.syncLocalExtensions().then(() => {
             verify(installer.install(deepEqual(delta))).once();
+            verify(installer.uninstall(deepEqual([]))).once();
+        });
+    });
+
+    test("should uninstall all extensions if none are available", () => {
+        const installedExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext2', path: 'path2' },
+        ];
+        const provider = givenExtensions([], installedExts);
+        const installer = mock(Installer);
+        const localExtensionService = new LocalExtensionService(
+            instance(provider),
+            instance(installer)
+        );
+
+        return localExtensionService.syncLocalExtensions().then(() => {
+            verify(installer.install(deepEqual([]))).once();
+            verify(installer.uninstall(deepEqual(installedExts))).once();
         });
     });
 
