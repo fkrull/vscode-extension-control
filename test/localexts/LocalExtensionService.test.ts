@@ -1,8 +1,9 @@
 import * as assert from 'assert';
-import { mock, verify, when } from 'ts-mockito';
+import { mock, verify, when, instance } from 'ts-mockito';
 import Provider from '../../src/localexts/Provider';
 import LocalExtensionService from '../../src/localexts/LocalExtensionService';
 import Installer from '../../src/localexts/Installer';
+import LocalExtension from '../../src/localexts/LocalExtension';
 
 suite("LocalExtensionService.syncLocalExtensions", () => {
 
@@ -11,22 +12,28 @@ suite("LocalExtensionService.syncLocalExtensions", () => {
             { name: 'ext1', path: 'path1' },
             { name: 'ext2', path: 'path2' }
         ];
-
-        const provider = mock(Provider);
-        when(provider.listAvailableExtensions()).thenReturn(
-            Promise.resolve(availableExts)
-        );
-        when(provider.listInstalledExtensions()).thenReturn(
-            Promise.resolve([])
-        );
+        const provider = givenExtensions(availableExts, []);
         const installer = mock(Installer);
         const localExtensionService = new LocalExtensionService(
-            provider,
-            installer
+            instance(provider),
+            instance(installer)
         );
 
         return localExtensionService.syncLocalExtensions().then(() => {
             verify(installer.install(availableExts)).once();
         });
     });
+
 });
+
+
+function givenExtensions(available: LocalExtension[], installed: LocalExtension[]): Provider {
+    const provider = mock(Provider);
+    when(provider.listAvailableExtensions()).thenReturn(
+        Promise.resolve(available)
+    );
+    when(provider.listInstalledExtensions()).thenReturn(
+        Promise.resolve(installed)
+    );
+    return provider;
+}

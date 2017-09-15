@@ -11,6 +11,7 @@ export default class LocalExtensionService {
     }
 
     syncLocalExtensions(): Promise<void> {
-        return Promise.resolve();
+        return this.provider.listAvailableExtensions()
+            .then(this.installer.install);
     }
 }
