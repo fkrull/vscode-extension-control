@@ -1,5 +1,6 @@
 import Provider from './Provider';
 import Installer from './Installer';
+import LocalExtension from './LocalExtension';
 
 export default class LocalExtensionService {
     private provider: Provider;
@@ -11,7 +12,12 @@ export default class LocalExtensionService {
     }
 
     syncLocalExtensions(): Promise<void> {
-        return this.provider.listAvailableExtensions()
-            .then(this.installer.install);
+        return Promise.all([
+            this.provider.listAvailableExtensions(),
+            this.provider.listInstalledExtensions()
+        ]).then(([ availableExts, installedExts ]) => {
+            const installedNames = installedExts.map(x => x.name);
+            return availableExts.filter(x => installedNames.indexOf(x.name) == -1);
+        }).then(this.installer.install);
     }
 }

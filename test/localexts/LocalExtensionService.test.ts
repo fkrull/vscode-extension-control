@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { mock, verify, when, instance } from 'ts-mockito';
+import { mock, verify, when, instance, deepEqual } from 'ts-mockito';
 import Provider from '../../src/localexts/Provider';
 import LocalExtensionService from '../../src/localexts/LocalExtensionService';
 import Installer from '../../src/localexts/Installer';
@@ -7,10 +7,10 @@ import LocalExtension from '../../src/localexts/LocalExtension';
 
 suite("LocalExtensionService.syncLocalExtensions", () => {
 
-    test("should install missing extensions", () => {
+    test("should install all available extensions", () => {
         const availableExts = [
             { name: 'ext1', path: 'path1' },
-            { name: 'ext2', path: 'path2' }
+            { name: 'ext2', path: 'path2' },
         ];
         const provider = givenExtensions(availableExts, []);
         const installer = mock(Installer);
@@ -20,7 +20,30 @@ suite("LocalExtensionService.syncLocalExtensions", () => {
         );
 
         return localExtensionService.syncLocalExtensions().then(() => {
-            verify(installer.install(availableExts)).once();
+            verify(installer.install(deepEqual(availableExts))).once();
+        });
+    });
+
+    test("should install only missing extensions", () => {
+        const availableExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext2', path: 'path2' },
+            { name: 'ext3', path: 'path3' },
+        ];
+        const installedExts = [
+            { name: 'ext1', path: 'path1' },
+            { name: 'ext3', path: 'path3' },
+        ]
+        const delta = [{ name: 'ext2', path: 'path2' }]
+        const provider = givenExtensions(availableExts, installedExts);
+        const installer = mock(Installer);
+        const localExtensionService = new LocalExtensionService(
+            instance(provider),
+            instance(installer)
+        );
+
+        return localExtensionService.syncLocalExtensions().then(() => {
+            verify(installer.install(deepEqual(delta))).once();
         });
     });
 
