@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
+import { VSCode } from '../vscodeapi';
 import LocalExtension from './LocalExtension';
 
 function promisify<R>(func): (...args: any[]) => Promise<R> {
@@ -39,13 +41,15 @@ async function isReadableFile(filepath: string): Promise<boolean> {
 
 export default class Provider {
     private availableExtensionPath: string;
+    private vscodeapi: VSCode;
 
-    constructor(availableExtensionPath: string) {
+    constructor(availableExtensionPath: string, vscodeapi: VSCode) {
         this.availableExtensionPath = availableExtensionPath;
+        this.vscodeapi = vscodeapi;
     }
 
     public async listAvailableExtensions(): Promise<LocalExtension[]> {
-        const availableExts = [];
+        const availableExts: LocalExtension[] = [];
         const files = await readdir(this.availableExtensionPath);
         for (const fname of files) {
             const pkgjson = path.join(this.availableExtensionPath, fname, 'package.json');
