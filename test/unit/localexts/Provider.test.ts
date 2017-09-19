@@ -4,9 +4,9 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import { instance, mock } from 'ts-mockito/lib/ts-mockito';
 import * as vscode from 'vscode';
-import LocalExtension from '../../src/localexts/LocalExtension';
-import Provider from '../../src/localexts/Provider';
-import { Extension, VSCode } from '../../src/vscodeapi';
+import LocalExtension from '../../../src/localexts/LocalExtension';
+import Provider from '../../../src/localexts/Provider';
+import { Extension, VSCode } from '../../../src/vscodeapi';
 
 function givenMockVSCodeApi(exts: Array<Extension<any>>): VSCode {
     return {

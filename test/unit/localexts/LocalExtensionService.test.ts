@@ -1,9 +1,9 @@
 import * as assert from 'assert';
 import { deepEqual, instance, mock, verify, when } from 'ts-mockito';
-import Installer from '../../src/localexts/Installer';
-import LocalExtension from '../../src/localexts/LocalExtension';
-import LocalExtensionService from '../../src/localexts/LocalExtensionService';
-import Provider from '../../src/localexts/Provider';
+import Installer from '../../../src/localexts/Installer';
+import LocalExtension from '../../../src/localexts/LocalExtension';
+import LocalExtensionService from '../../../src/localexts/LocalExtensionService';
+import Provider from '../../../src/localexts/Provider';
 
 suite('LocalExtensionService.syncLocalExtensions', () => {
 

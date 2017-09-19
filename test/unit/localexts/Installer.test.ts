@@ -2,8 +2,8 @@ import * as assert from 'assert';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as tmp from 'tmp';
-import Installer from '../../src/localexts/Installer';
-import LocalExtension from '../../src/localexts/LocalExtension';
+import Installer from '../../../src/localexts/Installer';
+import LocalExtension from '../../../src/localexts/LocalExtension';
 
 suite('Installer.install', () => {
     let srcdir: tmp.SynchrounousResult;
