@@ -1,5 +1,6 @@
 export interface Extension<T> {
     readonly id: string;
+    readonly extensionPath: string;
 }
 
 export interface Extensions {

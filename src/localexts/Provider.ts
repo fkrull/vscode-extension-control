@@ -19,6 +19,7 @@ function promisify<R>(func): (...args: any[]) => Promise<R> {
     };
 }
 
+const readFile: (path: string, encoding?: string) => Promise<Buffer> = promisify(fs.readFile);
 const readdir: (path: string) => Promise<string[]> = promisify(fs.readdir);
 const stat: (path: string) => Promise<fs.Stats> = promisify(fs.stat);
 function access(filepath: string, mode: number): Promise<boolean> {
@@ -64,7 +65,20 @@ export default class Provider {
         return availableExts;
     }
 
-    public listInstalledExtensions(): Promise<LocalExtension[]> {
-        return Promise.resolve([]);
+    public async listInstalledExtensions(): Promise<LocalExtension[]> {
+        const localExts: LocalExtension[] = [];
+        for (const ext of this.vscodeapi.extensions.all) {
+            const localExtFile = path.join(ext.extensionPath, 'local-extension');
+            try {
+                const localExtContent = await readFile(localExtFile, 'utf-8');
+                localExts.push({
+                    name: ext.id,
+                    path: localExtContent.toString().trim(),
+                });
+            } catch {
+                continue;
+            }
+        }
+        return localExts;
     }
 }
