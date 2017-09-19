@@ -14,11 +14,21 @@
             "preLaunchTask": "npm"
         },
         {
-            "name": "Launch Tests",
+            "name": "Launch Tests (VSCode)",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
             "args": ["--extensionDevelopmentPath=${workspaceRoot}", "--extensionTestsPath=${workspaceRoot}/out/test" ],
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
+            "preLaunchTask": "npm"
+        },
+        {
+            "name": "Launch Tests (Unit)",
+            "type": "node",
+            "request": "launch",
+            "args": ["./node_modules/mocha/bin/_mocha", "--recursive", "--ui=tdd", "out/test/unit"],
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
