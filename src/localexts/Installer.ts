@@ -18,7 +18,10 @@ export default class Installer {
         }
     }
 
-    public uninstall(exts: LocalExtension[]): Promise<void> {
-        return Promise.resolve();
+    public async uninstall(localExts: LocalExtension[]): Promise<void> {
+        for (const localExt of localExts) {
+            const extDir = path.join(this.extensionDir, localExt.name);
+            await fs.remove(extDir);
+        }
     }
 }

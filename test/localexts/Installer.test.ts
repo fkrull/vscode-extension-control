@@ -49,3 +49,34 @@ suite('Installer.install', () => {
     });
 
 });
+
+suite('Installer.uninstall', () => {
+    let extdir: tmp.SynchrounousResult;
+
+    setup(() => {
+        extdir = tmp.dirSync({ unsafeCleanup: true });
+    });
+
+    teardown(() => {
+        extdir.removeCallback();
+    });
+
+    test('should delete specified folders', async () => {
+        const localExts: LocalExtension[] = [];
+        for (const extName of ['ext2', 'ext1']) {
+            const extPath = path.join(extdir.name, extName);
+            fs.mkdirSync(extPath);
+            const localExtFile = path.join(extPath, 'local-extension');
+            fs.writeFileSync(localExtFile, '/some/path');
+            localExts.push({ name: extName, path: extPath });
+        }
+        fs.mkdirSync(path.join(extdir.name, 'ext3'));
+        const installer = new Installer(extdir.name);
+
+        await installer.uninstall(localExts);
+
+        const remainingNames = fs.readdirSync(extdir.name);
+        assert.deepEqual(remainingNames, ['ext3']);
+    });
+
+});
