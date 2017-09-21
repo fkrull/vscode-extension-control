@@ -21,17 +21,17 @@ async function isReadableFile(filepath: string): Promise<boolean> {
 }
 
 export default class Provider {
-    private availableExtensionPath: string;
-    private vscodeapi: VSCode;
+    private readonly availableExtensionPath: string;
+    private readonly installedExtensionPath: string;
 
-    constructor(availableExtensionPath: string, vscodeapi: VSCode) {
+    constructor(availableExtensionPath: string, installedExtensionPath: string) {
         this.availableExtensionPath = availableExtensionPath;
-        this.vscodeapi = vscodeapi;
+        this.installedExtensionPath = installedExtensionPath;
     }
 
     public async listAvailableExtensions(): Promise<LocalExtension[]> {
         const availableExts: LocalExtension[] = [];
-        const files = await fs.readdir(this.availableExtensionPath);
+        const files = await this.maybeListDirectory(this.availableExtensionPath);
         for (const fname of files) {
             const pkgjson = path.join(this.availableExtensionPath, fname, 'package.json');
             const readable = await isReadableFile(pkgjson);
@@ -46,19 +46,31 @@ export default class Provider {
     }
 
     public async listInstalledExtensions(): Promise<LocalExtension[]> {
-        const localExts: LocalExtension[] = [];
-        for (const ext of this.vscodeapi.extensions.all) {
-            const localExtFile = path.join(ext.extensionPath, 'local-extension');
+        const installedExts: LocalExtension[] = [];
+        const files = await this.maybeListDirectory(this.installedExtensionPath);
+        for (const fname of files) {
+            const localExtFile = path.join(this.installedExtensionPath, fname, 'local-extension');
             try {
                 const localExtContent = await fs.readFile(localExtFile, 'utf-8');
-                localExts.push({
-                    name: ext.id,
+                installedExts.push({
+                    name: fname,
                     path: localExtContent.toString().trim(),
                 });
             } catch {
                 continue;
             }
         }
-        return localExts;
+        return installedExts;
+    }
+
+    private async maybeListDirectory(dirPath: string): Promise<string[]> {
+        try {
+            return await fs.readdir(dirPath);
+        } catch (error) {
+            if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+                return [];
+            }
+            throw error;
+        }
     }
 }
