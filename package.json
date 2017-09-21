@@ -11,14 +11,14 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extensionControl.syncLocalExtensions"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extensionControl.syncLocalExtensions",
+                "title": "Extension Control: Sync Local Extensions"
             }
         ]
     },

@@ -1,29 +1,34 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+import * as path from 'path';
 import * as vscode from 'vscode';
+import DefaultPaths from './DefaultPaths';
+import Installer from './localexts/Installer';
+import LocalExtensionService from './localexts/LocalExtensionService';
+import Provider from './localexts/Provider';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    const defaultPaths = new DefaultPaths(process.platform);
+    const localExtensionService = new LocalExtensionService(
+        new Provider(
+            path.join(defaultPaths.getUserDirectory(), 'Extensions'),
+            defaultPaths.getExtensionDirectory(),
+        ),
+        new Installer(
+            defaultPaths.getExtensionDirectory(),
+        ),
+    );
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "extension-control" is now active!');
-
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    const disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
+    const disposable = vscode.commands.registerCommand('extensionControl.syncLocalExtensions', async () => {
+        try {
+            await localExtensionService.syncLocalExtensions();
+            vscode.window.showInformationMessage('Local extensions synchronized.');
+        } catch (error) {
+            vscode.window.showErrorMessage('Failed: ' + error);
+        }
     });
 
     context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {
     console.log('deactivate');
 }
