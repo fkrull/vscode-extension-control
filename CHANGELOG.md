@@ -1,7 +1,5 @@
-# Change Log
-All notable changes to the "extension-control" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+# Change Log for Extension Control
 
 ## [Unreleased]
 - Initial release
+  * Install and uninstall extension from \<vscode User dir\>/Extensions.
