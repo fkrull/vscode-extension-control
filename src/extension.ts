@@ -5,6 +5,8 @@ import Installer from './localexts/Installer';
 import LocalExtensionService from './localexts/LocalExtensionService';
 import Provider from './localexts/Provider';
 
+type CommandCallback = (...args: any[]) => any;
+
 export function activate(context: vscode.ExtensionContext) {
     const defaultPaths = new DefaultPaths(process.platform);
     const localExtensionService = new LocalExtensionService(
@@ -17,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
-    const disposable = vscode.commands.registerCommand('extensionControl.syncLocalExtensions', async () => {
+    registerCommand(context, 'extensionControl.syncLocalExtensions', async () => {
         try {
             await localExtensionService.syncLocalExtensions();
             vscode.window.showInformationMessage('Local extensions synchronized.');
@@ -26,9 +28,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(disposable);
+    registerCommand(context, 'extensionControl.installMissingExtensions', async () => {
+        console.log('installMissingExtensions');
+    });
 }
 
 export function deactivate() {
     console.log('deactivate');
+}
+
+function registerCommand(context: vscode.ExtensionContext, command: string, callback: CommandCallback) {
+    const disposable = vscode.commands.registerCommand(command, callback);
+    context.subscriptions.push(disposable);
 }
