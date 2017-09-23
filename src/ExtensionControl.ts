@@ -1,7 +1,7 @@
+import IExtensionConfig from './config/IExtensionConfig';
 import IExtensionInstaller from './control/IExtensionInstaller';
 import IExtensionService from './control/IExtensionService';
 import IInstalledExtensionProvider from './installedextensions/IInstalledExtensionProvider';
-import IExtensionConfig from './config/IExtensionConfig';
 
 export default class ExtensionControl {
     private readonly installedExtensionProvider: IInstalledExtensionProvider;

@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { VSCode } from '../vscodeapi';
+import { IVSCodeAPI } from '../vscodeapi';
 import LocalExtension from './LocalExtension';
 
 function access(filepath: string, mode: number): Promise<boolean> {

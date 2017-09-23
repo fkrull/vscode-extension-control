@@ -1,12 +1,17 @@
-export interface Extension<T> {
+export interface IExtension<T> {
     readonly id: string;
     readonly extensionPath: string;
 }
 
-export interface Extensions {
-    readonly all: Array<Extension<any>>;
+export interface IExtensions {
+    readonly all: Array<IExtension<any>>;
 }
 
-export interface VSCode {
-    readonly extensions: Extensions;
+export interface IEnv {
+    readonly appRoot: string;
+}
+
+export interface IVSCodeAPI {
+    readonly extensions: IExtensions;
+    readonly env: IEnv;
 }
