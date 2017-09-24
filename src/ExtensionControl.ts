@@ -22,8 +22,12 @@ export default class ExtensionControl {
     }
 
     public async installMissingExtensions(): Promise<void> {
-        const installedExts = await this.installedExtensionProvider.getInstalledExtensions();
         const configuredExts = await this.extensionConfig.getConfiguredExtensions();
+        if (configuredExts === undefined) {
+            return;
+        }
+
+        const installedExts = await this.installedExtensionProvider.getInstalledExtensions();
         const extsToInstall = await this.extensionService.selectExtensionsToInstall(
             configuredExts,
             installedExts,

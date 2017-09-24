@@ -74,7 +74,6 @@ suite('extensionControl.installMissingExtensions', () => {
         assert.equal(testext.id, 'not.installed');
         assert.equal(testext.extensionPath, path.join(testctx.extDir, 'not.installed-0.0.1'));
         assert.deepEqual(testext, pkgJSON);
-
     });
 
 });
