@@ -30,8 +30,13 @@ suite('ExtensionControl.installMissingExtensions', () => {
 
     test('should install missing extensions', async () => {
         const installedExts: IInstalledExtension[] = [ {id: 'ext.2', extensionPath: 'path'} ];
-        const configuredExts: IConfiguredExtension[] = [ {id: 'ext.1'}, {id: 'ext.2'} ];
-        const expectedExts: IConfiguredExtension[] = [ {id: 'ext.1'} ];
+        const configuredExts: IConfiguredExtension[] = [
+            {id: 'ext.1', type: 'test'},
+            {id: 'ext.2', type: 'test'},
+        ];
+        const expectedExts: IConfiguredExtension[] = [
+            {id: 'ext.1', type: 'test'},
+        ];
         installedExtProviderMock
             .setup((x) => x.getInstalledExtensions())
             .returns(() => Promise.resolve(installedExts));
