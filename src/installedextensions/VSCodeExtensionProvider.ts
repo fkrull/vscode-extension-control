@@ -1,17 +1,22 @@
-import { IVSCodeAPI } from '../vscodeapi';
+import { IExtensions } from '../vscodeapi';
 import IInstalledExtension from './IInstalledExtension';
 import IInstalledExtensionProvider from './IInstalledExtensionProvider';
 
 export default class VSCodeExtensionProvider implements IInstalledExtensionProvider {
-    private readonly vscodeAPI: IVSCodeAPI;
+    private readonly appRoot: string;
+    private readonly extensionAPI;
 
-    constructor(vscodeAPI: IVSCodeAPI) {
-        this.vscodeAPI = vscodeAPI;
+    constructor(
+        appRoot: string,
+        extensionAPI: IExtensions,
+    ) {
+        this.appRoot = appRoot;
+        this.extensionAPI = extensionAPI;
     }
 
     public async getInstalledExtensions(): Promise<IInstalledExtension[]> {
-        const userExtensions = this.vscodeAPI.extensions.all
-            .filter((ext) => !ext.extensionPath.startsWith(this.vscodeAPI.env.appRoot));
+        const userExtensions = this.extensionAPI.all
+            .filter((ext) => !ext.extensionPath.startsWith(this.appRoot));
         return Promise.resolve(userExtensions);
     }
 

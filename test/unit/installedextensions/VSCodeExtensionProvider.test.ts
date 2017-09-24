@@ -6,16 +6,14 @@ import { IEnv, IExtensions } from '../../../src/vscodeapi';
 
 suite('VSCodeExtensionProvider.getInstalledExtensions', () => {
 
-    const envMock = typemoq.Mock.ofType<IEnv>();
+    const appRoot = 'appRoot';
     const extsMock = typemoq.Mock.ofType<IExtensions>();
-    const vscodeMock = {
-        env: envMock.object,
-        extensions: extsMock.object,
-    };
-    const vscodeExtensionProvider = new VSCodeExtensionProvider(vscodeMock);
+    const vscodeExtensionProvider = new VSCodeExtensionProvider(
+        appRoot,
+        extsMock.object,
+    );
 
     setup(() => {
-        envMock.reset();
         extsMock.reset();
     });
 
@@ -44,9 +42,6 @@ suite('VSCodeExtensionProvider.getInstalledExtensions', () => {
         extsMock
             .setup((x) => x.all)
             .returns(() => apiExts);
-        envMock
-            .setup((x) => x.appRoot)
-            .returns(() => 'appRoot');
 
         const installedExts = await vscodeExtensionProvider.getInstalledExtensions();
 
