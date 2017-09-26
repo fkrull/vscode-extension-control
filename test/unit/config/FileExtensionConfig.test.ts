@@ -9,7 +9,7 @@ import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import IJsonEntryParser from '../../../src/config/IJSONEntryParser';
 
-class TestParser1 implements IJsonEntryParser {
+class TestParser1 implements IJsonEntryParser<IConfiguredExtension> {
     public isValid(entry: any): boolean {
         return typeof entry === 'string';
     }
@@ -20,7 +20,7 @@ class TestParser1 implements IJsonEntryParser {
 }
 
 // tslint:disable-next-line:max-classes-per-file
-class TestParser2 implements IJsonEntryParser {
+class TestParser2 implements IJsonEntryParser<IConfiguredExtension> {
     public isValid(entry: any): boolean {
         return typeof entry === 'object';
     }

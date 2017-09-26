@@ -17,7 +17,7 @@ suite('LocalExtensionEntryParser.isValid', () => {
         ['type !== "local"', { id: 'ext.id', type: 'not-local', path: '/path' }],
         ['id not a string', { id: 5, type: 'local', path: '/path' }],
         ['path not a string', { id: 'ext.id', type: 'local', path: [1, 2] }],
-    ]
+    ];
 
     const parser = new LocalExtensionEntryParser();
 
@@ -47,6 +47,6 @@ suite('LocalExtensionEntryParser.parse', () => {
             id: 'ext.id',
             type: 'local',
         });
-    })
+    });
 
-})
+});

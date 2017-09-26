@@ -8,9 +8,9 @@ import IJsonEntryParser from './IJSONEntryParser';
 
 export default class FileExtensionConfig implements IExtensionConfig {
     private readonly config: IConfiguration;
-    private readonly parsers: IJsonEntryParser[];
+    private readonly parsers: Array<IJsonEntryParser<IConfiguredExtension>>;
 
-    constructor(config: IConfiguration, parsers: IJsonEntryParser[]) {
+    constructor(config: IConfiguration, parsers: Array<IJsonEntryParser<IConfiguredExtension>>) {
         this.config = config;
         this.parsers = parsers;
     }

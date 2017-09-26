@@ -1,6 +1,6 @@
 import IConfiguredExtension from './IConfiguredExtension';
 
-export default interface IJsonEntryParser {
+export default interface IJsonEntryParser<T extends IConfiguredExtension> {
     isValid(entry: any): boolean;
-    parse(entry: any): IConfiguredExtension;
+    parse(entry: any): T;
 }

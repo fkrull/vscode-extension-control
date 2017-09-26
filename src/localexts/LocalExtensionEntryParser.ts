@@ -2,7 +2,7 @@ import IConfiguredExtension from '../config/IConfiguredExtension';
 import IJsonEntryParser from '../config/IJSONEntryParser';
 import ILocalExtension from './ILocalExtension';
 
-export default class LocalExtensionEntryParser implements IJsonEntryParser {
+export default class LocalExtensionEntryParser implements IJsonEntryParser<ILocalExtension> {
 
     public isValid(entry: any): boolean {
         return typeof entry === 'object' &&
