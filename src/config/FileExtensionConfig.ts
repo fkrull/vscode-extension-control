@@ -4,7 +4,7 @@ import * as path from 'path';
 import IConfiguration from './IConfiguration';
 import IConfiguredExtension from './IConfiguredExtension';
 import IExtensionConfig from './IExtensionConfig';
-import IJsonEntryParser from './IJSONEntryParser';
+import IJsonEntryParser from './IJsonEntryParser';
 
 export default class FileExtensionConfig implements IExtensionConfig {
     private readonly config: IConfiguration;

@@ -7,7 +7,7 @@ import { Mock } from 'typemoq';
 import FileExtensionConfig from '../../../src/config/FileExtensionConfig';
 import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
-import IJsonEntryParser from '../../../src/config/IJSONEntryParser';
+import IJsonEntryParser from '../../../src/config/IJsonEntryParser';
 
 class TestParser1 implements IJsonEntryParser<IConfiguredExtension> {
     public isValid(entry: any): boolean {

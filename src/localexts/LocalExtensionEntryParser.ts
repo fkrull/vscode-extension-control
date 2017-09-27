@@ -1,5 +1,5 @@
 import IConfiguredExtension from '../config/IConfiguredExtension';
-import IJsonEntryParser from '../config/IJSONEntryParser';
+import IJsonEntryParser from '../config/IJsonEntryParser';
 import ILocalExtension from './ILocalExtension';
 
 export default class LocalExtensionEntryParser implements IJsonEntryParser<ILocalExtension> {
