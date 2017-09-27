@@ -1,3 +1,5 @@
+import * as path from 'path';
+
 import IConfiguredExtension from '../config/IConfiguredExtension';
 import IJsonEntryParser from '../config/IJsonEntryParser';
 import LocalExtension from './LocalExtension';
@@ -11,7 +13,7 @@ export default class LocalExtensionEntryParser implements IJsonEntryParser<Local
             typeof entry.path === 'string';
     }
 
-    public parse(entry: any): LocalExtension {
-        return new LocalExtension(entry.id, entry.path);
+    public parse(entry: any, configFilePath: string): LocalExtension {
+        return new LocalExtension(entry.id, path.join(configFilePath, entry.path));
     }
 }

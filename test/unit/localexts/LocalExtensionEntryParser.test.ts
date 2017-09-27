@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import * as path from 'path';
 
 import LocalExtension from '../../../src/localexts/LocalExtension';
 import LocalExtensionEntryParser from '../../../src/localexts/LocalExtensionEntryParser';
@@ -40,10 +41,10 @@ suite('LocalExtensionEntryParser.parse', () => {
     const parser = new LocalExtensionEntryParser();
 
     test('should return parsed entry', () => {
-        const parsed = parser.parse({ id: 'ext.id', type: 'local', path: '/path' }) as LocalExtension;
+        const parsed = parser.parse({ id: 'ext.id', type: 'local', path: 'relative-path' }, 'root') as LocalExtension;
 
         assert.deepEqual(parsed, {
-            extensionPath: '/path',
+            extensionPath: path.join('root', 'relative-path'),
             id: 'ext.id',
             type: 'local',
         });

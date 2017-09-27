@@ -25,7 +25,7 @@ export default class FileExtensionConfig implements IExtensionConfig {
         return (parsedJson as any[]).map((elem) => {
             for (const parser of this.parsers) {
                 if (parser.isValid(elem)) {
-                    return parser.parse(elem);
+                    return parser.parse(elem, this.config.userDirectory);
                 }
             }
             throw new Error(`no matching parser for '${elem}'`);

@@ -9,38 +9,40 @@ import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import IJsonEntryParser from '../../../src/config/IJsonEntryParser';
 
-class TestParser1 implements IJsonEntryParser<IConfiguredExtension> {
-    public isValid(entry: any): boolean {
-        return typeof entry === 'string';
-    }
-
-    public parse(entry: any): IConfiguredExtension {
-        return {id: entry, type: 'test'};
-    }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-class TestParser2 implements IJsonEntryParser<IConfiguredExtension> {
-    public isValid(entry: any): boolean {
-        return typeof entry === 'object';
-    }
-
-    public parse(entry: any): IConfiguredExtension {
-        return {id: entry.name, type: 'test'};
-    }
-}
-
 suite('FileExtensionConfig.getConfiguredExtensions', () => {
 
     let tmpdir: tmp.SynchrounousResult;
     const configMock = Mock.ofType<IConfiguration>();
+    const parser1 = Mock.ofType<IJsonEntryParser<IConfiguredExtension>>();
+    const parser2 = Mock.ofType<IJsonEntryParser<IConfiguredExtension>>();
+    const fileExtensionConfig = new FileExtensionConfig(
+        configMock.object,
+        [parser1.object, parser2.object],
+    );
 
     setup(() => {
         tmpdir = tmp.dirSync({ unsafeCleanup: true });
+
         configMock.reset();
         configMock
             .setup((x) => x.userDirectory)
             .returns(() => tmpdir.name);
+
+        parser1.reset();
+        parser1
+            .setup((x) => x.isValid('entry1'))
+            .returns(() => true);
+        parser1
+            .setup((x) => x.parse('entry1', tmpdir.name))
+            .returns(() => ({ id: 'entry1', type: 'test' }));
+
+        parser2.reset();
+        parser2
+            .setup((x) => x.isValid('entry2'))
+            .returns(() => true);
+        parser2
+            .setup((x) => x.parse('entry2', tmpdir.name))
+            .returns(() => ({ id: 'entry2', type: 'test' }));
     });
 
     teardown(() => {
@@ -48,8 +50,6 @@ suite('FileExtensionConfig.getConfiguredExtensions', () => {
     });
 
     test('should return nothing if extensions.json doesn\'t exist', async () => {
-        const fileExtensionConfig = new FileExtensionConfig(configMock.object, []);
-
         const exts = await fileExtensionConfig.getConfiguredExtensions();
 
         assert.equal(exts, undefined);
@@ -57,7 +57,6 @@ suite('FileExtensionConfig.getConfiguredExtensions', () => {
 
     test('should parse empty extensions.json', async () => {
         await givenExtensionJSON([]);
-        const fileExtensionConfig = new FileExtensionConfig(configMock.object, []);
 
         const exts = await fileExtensionConfig.getConfiguredExtensions();
 
@@ -68,27 +67,22 @@ suite('FileExtensionConfig.getConfiguredExtensions', () => {
         await givenExtensionJSON([
             'entry1',
             'entry2',
-            {name: 'entry3'},
+            'entry1',
         ]);
-        const fileExtensionConfig = new FileExtensionConfig(
-            configMock.object,
-            [new TestParser1(), new TestParser2()],
-        );
 
         const exts = await fileExtensionConfig.getConfiguredExtensions();
 
         assert.deepEqual(exts, [
             {id: 'entry1', type: 'test'},
             {id: 'entry2', type: 'test'},
-            {id: 'entry3', type: 'test'},
+            {id: 'entry1', type: 'test'},
         ]);
     });
 
     test('should throw error if no matching parser', async () => {
         await givenExtensionJSON([
-            'entry1',
+            'entry3',
         ]);
-        const fileExtensionConfig = new FileExtensionConfig(configMock.object, []);
 
         try {
             const exts = await fileExtensionConfig.getConfiguredExtensions();
