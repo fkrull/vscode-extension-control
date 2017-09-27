@@ -7,13 +7,11 @@ import IExtensionConfig from './IExtensionConfig';
 import IJsonEntryParser from './IJsonEntryParser';
 
 export default class FileExtensionConfig implements IExtensionConfig {
-    private readonly config: IConfiguration;
-    private readonly parsers: Array<IJsonEntryParser<IConfiguredExtension>>;
 
-    constructor(config: IConfiguration, parsers: Array<IJsonEntryParser<IConfiguredExtension>>) {
-        this.config = config;
-        this.parsers = parsers;
-    }
+    constructor(
+        private readonly config: IConfiguration,
+        private readonly parsers: Array<IJsonEntryParser<IConfiguredExtension>>,
+    ) {}
 
     public async getConfiguredExtensions(): Promise<IConfiguredExtension[] | undefined> {
         let extJSON: Buffer;

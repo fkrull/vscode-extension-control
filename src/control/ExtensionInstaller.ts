@@ -3,11 +3,10 @@ import IExtensionInstaller from './IExtensionInstaller';
 import IInstallerStrategy from './IInstallerStrategy';
 
 export default class ExtensionInstaller implements IExtensionInstaller {
-    private readonly installerStrategies: Array<IInstallerStrategy<any>>;
 
-    constructor(installerStrategies: Array<IInstallerStrategy<any>>) {
-        this.installerStrategies = installerStrategies;
-    }
+    constructor(
+        private readonly installerStrategies: Array<IInstallerStrategy<any>>,
+    ) {}
 
     public async installExtensions(extensions: IConfiguredExtension[]): Promise<void> {
         const promises = extensions.map((ext) => {

@@ -7,11 +7,10 @@ import IInstallerStrategy from '../control/IInstallerStrategy';
 import LocalExtension from './LocalExtension';
 
 export default class LocalExtensionInstallStrategy implements IInstallerStrategy<LocalExtension> {
-    private readonly config: IConfiguration;
 
-    constructor(config: IConfiguration) {
-        this.config = config;
-    }
+    constructor(
+        private readonly config: IConfiguration,
+    ) {}
 
     public isValid(ext: IConfiguredExtension): boolean {
         return ext instanceof LocalExtension;

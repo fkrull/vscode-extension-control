@@ -3,6 +3,7 @@ import IInstalledExtension from '../installedextensions/IInstalledExtension';
 import IExtensionService from './IExtensionService';
 
 export default class ExtensionService implements IExtensionService {
+
     public async selectExtensionsToInstall(
         configuredExtensions: IConfiguredExtension[],
         installedExtensions: IInstalledExtension[],
@@ -13,4 +14,5 @@ export default class ExtensionService implements IExtensionService {
     private extensionIsInstalled(ext: IConfiguredExtension, installedExtensions: IInstalledExtension[]): any {
         return installedExtensions.findIndex((installedExt) => ext.id === installedExt.id) !== -1;
     }
+
 }

@@ -2,11 +2,10 @@ import * as os from 'os';
 import * as path from 'path';
 
 export default class DefaultPaths {
-    private readonly platform: NodeJS.Platform;
 
-    constructor(platform: NodeJS.Platform) {
-        this.platform = platform;
-    }
+    constructor(
+        private readonly platform: NodeJS.Platform,
+    ) {}
 
     public getUserDirectory(): string {
         return path.join(this.getBaseConfigDir(), 'Code', 'User');
