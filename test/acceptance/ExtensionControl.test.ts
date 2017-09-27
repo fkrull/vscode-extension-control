@@ -72,7 +72,7 @@ suite('extensionControl.installMissingExtensions', () => {
         assert.equal(exts.length, 1);
         const testext = exts[0];
         assert.equal(testext.id, 'not.installed');
-        assert.equal(testext.extensionPath, path.join(testctx.extDir, 'not.installed-0.0.1'));
+        assert.equal(testext.extensionPath, path.join(testctx.extDir, 'not.installed'));
         assert.deepEqual(testext, pkgJSON);
     });
 
