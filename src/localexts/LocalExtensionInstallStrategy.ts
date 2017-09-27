@@ -5,7 +5,7 @@ import LocalExtension from './LocalExtension';
 export default class LocalExtensionInstallStrategy implements IInstallerStrategy<LocalExtension> {
 
     public isValid(ext: IConfiguredExtension): boolean {
-        throw new Error('Method not implemented.');
+        return ext instanceof LocalExtension;
     }
     public install(ext: LocalExtension): Promise<void> {
         throw new Error('Method not implemented.');
