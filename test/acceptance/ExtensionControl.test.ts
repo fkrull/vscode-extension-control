@@ -13,8 +13,7 @@ class TestContext {
     }
 
     public async setup() {
-        await fs.emptyDir(this.extDir);
-        await fs.emptyDir(this.userDir);
+        await this.teardown();
         await fs.writeFile(
             path.join(this.userDir, 'settings.json'),
             JSON.stringify({
@@ -22,6 +21,13 @@ class TestContext {
                 'extensionControl.userDirectory': this.userDir,
             }),
         );
+    }
+
+    public async teardown() {
+        await Promise.all([
+            fs.emptyDir(this.extDir),
+            fs.emptyDir(this.userDir),
+        ]);
     }
 
     public givenExtensionList(exts: any[]) {
@@ -46,6 +52,10 @@ suite('extensionControl.installMissingExtensions', () => {
 
     suiteSetup(() => {
         return testctx.setup();
+    });
+
+    suiteTeardown(() => {
+        return testctx.teardown();
     });
 
     test('should install missing local extension in extension list', async () => {
@@ -73,7 +83,13 @@ suite('extensionControl.installMissingExtensions', () => {
         const testext = exts[0];
         assert.equal(testext.id, 'not.installed');
         assert.equal(testext.extensionPath, path.join(testctx.extDir, 'not.installed'));
-        assert.deepEqual(testext, pkgJSON);
+        assertIsSupersetOf(testext.packageJSON, pkgJSON);
     });
 
 });
+
+function assertIsSupersetOf(actual: object, expected: object) {
+    Object.getOwnPropertyNames(expected).forEach((prop) => {
+        assert.deepEqual(actual[prop], expected[prop]);
+    });
+}
