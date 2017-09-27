@@ -1,8 +1,8 @@
 import IConfiguredExtension from '../config/IConfiguredExtension';
 import IJsonEntryParser from '../config/IJsonEntryParser';
-import ILocalExtension from './ILocalExtension';
+import LocalExtension from './LocalExtension';
 
-export default class LocalExtensionEntryParser implements IJsonEntryParser<ILocalExtension> {
+export default class LocalExtensionEntryParser implements IJsonEntryParser<LocalExtension> {
 
     public isValid(entry: any): boolean {
         return typeof entry === 'object' &&
@@ -11,11 +11,7 @@ export default class LocalExtensionEntryParser implements IJsonEntryParser<ILoca
             typeof entry.path === 'string';
     }
 
-    public parse(entry: any): ILocalExtension {
-        return {
-            extensionPath: entry.path,
-            id: entry.id,
-            type: 'local',
-        };
+    public parse(entry: any): LocalExtension {
+        return new LocalExtension(entry.id, entry.path);
     }
 }

@@ -4,4 +4,4 @@ suite('LocalExtensionInstallStrategy.isValid', () => {
 
     const localExtStrategy = new LocalExtensionInstallStrategy();
 
-})
+});
