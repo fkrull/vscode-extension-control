@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import * as os from 'os';
 import * as path from 'path';
 
 import IConfiguration from './IConfiguration';
@@ -18,7 +19,10 @@ export default class FileExtensionConfig implements IExtensionConfig {
         try {
             extJSON = await fs.readFile(path.join(this.config.userDirectory, 'extensions.json'));
         } catch (exc) {
-            return undefined;
+            if ((exc as NodeJS.ErrnoException).code === 'ENOENT') {
+                return undefined;
+            }
+            throw exc;
         }
 
         const parsedJson = JSON.parse(extJSON.toString());

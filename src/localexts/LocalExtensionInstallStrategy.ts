@@ -15,6 +15,7 @@ export default class LocalExtensionInstallStrategy implements IInstallerStrategy
     public isValid(ext: IConfiguredExtension): boolean {
         return ext instanceof LocalExtension;
     }
+
     public async install(ext: LocalExtension): Promise<void> {
         const extInstallDir = path.join(this.config.extensionDirectory, ext.id);
         await fs.copy(

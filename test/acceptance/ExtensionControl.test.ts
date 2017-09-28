@@ -14,13 +14,11 @@ class TestContext {
 
     public async setup() {
         await this.teardown();
-        await fs.writeFile(
-            path.join(this.userDir, 'settings.json'),
-            JSON.stringify({
-                'extensionControl.extensionDirectory': this.extDir,
-                'extensionControl.userDirectory': this.userDir,
-            }),
-        );
+        const config = vscode.workspace.getConfiguration('extensionControl');
+        await Promise.all([
+            config.update('extensionDirectory', this.extDir, vscode.ConfigurationTarget.Global),
+            config.update('userDirectory', this.userDir, vscode.ConfigurationTarget.Global),
+        ]);
     }
 
     public async teardown() {
@@ -30,18 +28,18 @@ class TestContext {
         ]);
     }
 
-    public givenExtensionList(exts: any[]) {
-        return fs.writeFile(
+    public async givenExtensionList(exts: any[]) {
+        await fs.writeJSON(
             path.join(this.userDir, 'extensions.json'),
-            JSON.stringify(exts),
+            exts,
         );
     }
 
     public async givenLocalExtension(folder: string, json: any) {
         await fs.mkdirp(path.join(this.userDir, 'Extensions', folder));
-        await fs.writeFile(
+        await fs.writeJSON(
             path.join(this.userDir, 'Extensions', folder, 'package.json'),
-            JSON.stringify(json),
+            json,
         );
     }
 }
@@ -50,11 +48,11 @@ suite('extensionControl.installMissingExtensions', () => {
 
     const testctx = new TestContext(path.join(__dirname, '..', '..', '..'));
 
-    suiteSetup(() => {
+    setup(() => {
         return testctx.setup();
     });
 
-    suiteTeardown(() => {
+    teardown(() => {
         return testctx.teardown();
     });
 
@@ -67,6 +65,7 @@ suite('extensionControl.installMissingExtensions', () => {
             publisher: 'not',
             version: '0.0.1',
         };
+        await testctx.givenLocalExtension('not-installed', pkgJSON);
         await testctx.givenExtensionList([
             {
                 id: 'not.installed',
@@ -74,16 +73,12 @@ suite('extensionControl.installMissingExtensions', () => {
                 type: 'local',
             },
         ]);
-        testctx.givenLocalExtension('not-installed', pkgJSON);
 
         await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
 
-        const exts = vscode.extensions.all.filter((ext) => ext.extensionPath.startsWith(testctx.extDir));
-        assert.equal(exts.length, 1);
-        const testext = exts[0];
-        assert.equal(testext.id, 'not.installed');
-        assert.equal(testext.extensionPath, path.join(testctx.extDir, 'not.installed'));
-        assertIsSupersetOf(testext.packageJSON, pkgJSON);
+        const extSrcDir = path.join(testctx.userDir, 'Extensions', 'not-installed');
+        const extDir = path.join(testctx.extDir, 'not.installed');
+        assertFilesEqual(path.join(extDir, 'package.json'), path.join(extSrcDir, 'package.json'));
     });
 
 });
@@ -91,5 +86,23 @@ suite('extensionControl.installMissingExtensions', () => {
 function assertIsSupersetOf(actual: object, expected: object) {
     Object.getOwnPropertyNames(expected).forEach((prop) => {
         assert.deepEqual(actual[prop], expected[prop]);
+    });
+}
+
+function assertFilesEqual(a: string, b: string) {
+    [a, b].map((filePath) => {
+        try {
+            return fs.readFileSync(filePath).toString();
+        } catch (e) {
+            assert.fail(undefined, undefined, `exception thrown: ${e}`);
+        }
+    }).reduce((s1, s2) => {
+        if (s1 === undefined) {
+            return s2;
+        } else if (s2 === undefined) {
+            return s1;
+        }
+        assert.equal(s1, s2);
+        return s2;
     });
 }
