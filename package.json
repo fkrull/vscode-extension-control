@@ -26,7 +26,23 @@
                 "category": "Extension Control",
                 "title": "Install Missing Extensions"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Extension Control configuration",
+            "properties": {
+                "extensionControl.userDirectory": {
+                    "type": ["string", "null"],
+                    "default": null,
+                    "description": "Path to the user directory (where extensions.json is)."
+                },
+                "extensionControl.extensionDirectory": {
+                    "type": ["string", "null"],
+                    "default": null,
+                    "description": "Path to the extension directory (where extensions are installed)."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

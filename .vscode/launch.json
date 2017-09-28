@@ -33,7 +33,7 @@
             "name": "Launch Tests (Unit)",
             "type": "node",
             "request": "launch",
-            "args": ["./node_modules/mocha/bin/_mocha", "--recursive", "--ui=tdd", "out/test/unit"],
+            "args": ["./node_modules/mocha/bin/_mocha", "--recursive", "--colors", "--ui=tdd", "out/test/unit"],
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
