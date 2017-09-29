@@ -4,6 +4,8 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import { Mock } from 'typemoq';
 
+import { fail } from '../../helper';
+
 import FileExtensionConfig from '../../../src/config/FileExtensionConfig';
 import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
@@ -91,13 +93,13 @@ suite('FileExtensionConfig.getConfiguredExtensions()', () => {
             return;
         }
 
-        assert.fail(undefined, undefined, 'should have failed with an error');
+        fail('should have failed with an error');
     });
 
     async function givenExtensionJSON(contents: any[]): Promise<void> {
-        await fs.writeFile(
+        await fs.writeJSON(
             path.join(tmpdir.name, 'extensions.json'),
-            JSON.stringify(contents),
+            contents,
         );
     }
 

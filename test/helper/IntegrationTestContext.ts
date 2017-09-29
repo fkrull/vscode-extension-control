@@ -2,6 +2,9 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
+import { _setMockExtensionList } from '../../src/extension';
+import { IExtension } from '../../src/vscodeapi';
+
 export default class IntegrationTestContext {
 
     public readonly extDir: string;
@@ -28,6 +31,10 @@ export default class IntegrationTestContext {
         ]);
     }
 
+    public givenAdditionalInstalledExtensions(...additionalExtensions: Array<IExtension<any>>) {
+        _setMockExtensionList(this.getRealExtensions().concat(additionalExtensions));
+    }
+
     public async givenExtensionList(exts: any[]) {
         await fs.writeJSON(
             path.join(this.userDir, 'extensions.json'),
@@ -41,6 +48,10 @@ export default class IntegrationTestContext {
             path.join(this.userDir, 'Extensions', folder, 'package.json'),
             json,
         );
+    }
+
+    private getRealExtensions(): Array<IExtension<any>> {
+        return vscode.extensions.all.filter((ext) => !ext.extensionPath.startsWith(this.extDir));
     }
 
 }
