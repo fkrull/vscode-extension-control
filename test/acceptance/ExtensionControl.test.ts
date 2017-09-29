@@ -3,7 +3,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-import { _setMockExtensionAPI } from '../../src/extension';
+import { _setMockExtensionList } from '../../src/extension';
+import { IExtension } from '../../src/vscodeapi';
 
 class TestContext {
     public readonly extDir: string;
@@ -52,9 +53,9 @@ suite('extensionControl.installMissingExtensions', () => {
 
     setup(async () => {
         await testctx.setup();
-        _setMockExtensionAPI({
-            all: vscode.extensions.all.filter((ext) => !ext.extensionPath.startsWith(testctx.extDir)),
-        });
+        _setMockExtensionList(
+            vscode.extensions.all.filter((ext) => !ext.extensionPath.startsWith(testctx.extDir)),
+        );
     });
 
     teardown(async () => {
@@ -86,6 +87,51 @@ suite('extensionControl.installMissingExtensions', () => {
         assertFilesEqual(path.join(extDir, 'package.json'), path.join(extSrcDir, 'package.json'));
     });
 
+});
+
+suite('extensionControl.installMissingExtensions', () => {
+
+    const testctx = new TestContext(path.join(__dirname, '..', '..', '..'));
+
+    setup(async () => {
+        await testctx.setup();
+        const coreExts: Array<IExtension<any>> = vscode.extensions.all.filter(
+            (ext) => !ext.extensionPath.startsWith(testctx.extDir));
+        _setMockExtensionList(
+            coreExts.concat({
+                extensionPath: path.join(testctx.extDir, 'already.installed'),
+                id: 'already.installed',
+            }),
+        );
+    });
+
+    teardown(async () => {
+        await testctx.teardown();
+    });
+
+
+    test('should not install extension that is already installed', async () => {
+        const pkgJSON = {
+            engines: {
+                vscode: '^1.16.0',
+            },
+            name: 'installed',
+            publisher: 'already',
+            version: '0.0.1',
+        };
+        await testctx.givenLocalExtension('already-installed', pkgJSON);
+        await testctx.givenExtensionList([
+            {
+                id: 'already.installed',
+                path: 'Extensions/already-installed',
+                type: 'local',
+            },
+        ]);
+
+        await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
+
+        assert.deepEqual(await fs.readdir(testctx.extDir), []);
+    });
 });
 
 function assertIsSupersetOf(actual: object, expected: object) {

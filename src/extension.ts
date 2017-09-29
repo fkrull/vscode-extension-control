@@ -11,13 +11,22 @@ import ExtensionControl from './ExtensionControl';
 import VSCodeExtensionProvider from './installedextensions/VSCodeExtensionProvider';
 import LocalExtensionEntryParser from './localexts/LocalExtensionEntryParser';
 import LocalExtensionInstallStrategy from './localexts/LocalExtensionInstallStrategy';
-import { IExtensions } from './vscodeapi';
+import { IExtension, IExtensions } from './vscodeapi';
 
 type CommandCallback = (...args: any[]) => any;
 
 let extensionAPI: IExtensions = vscode.extensions;
-export function _setMockExtensionAPI(newExtensionAPI: IExtensions) {
-    extensionAPI = newExtensionAPI;
+let mockExtensions: Array<IExtension<any>>;
+
+export function _setMockExtensionList(newMockExtensions: Array<IExtension<any>>) {
+    mockExtensions = newMockExtensions;
+    if (extensionAPI === vscode.extensions) {
+        extensionAPI = new class {
+            get all(): Array<IExtension<any>> {
+                return mockExtensions;
+            }
+        }();
+    }
 }
 
 export function activate(context: vscode.ExtensionContext) {
