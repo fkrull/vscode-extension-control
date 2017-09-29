@@ -18,3 +18,9 @@ export function assertFilesEqual(a: string, b: string) {
         return s2;
     });
 }
+
+export function assertIsSupersetOf(actual: object, expected: object) {
+    Object.getOwnPropertyNames(expected).forEach((prop) => {
+        assert.deepEqual(actual[prop], expected[prop]);
+    });
+}
