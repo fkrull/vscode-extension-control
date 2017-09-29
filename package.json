@@ -32,12 +32,18 @@
             "title": "Extension Control configuration",
             "properties": {
                 "extensionControl.userDirectory": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
                     "description": "Path to the user directory (where extensions.json is)."
                 },
                 "extensionControl.extensionDirectory": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
                     "description": "Path to the extension directory (where extensions are installed)."
                 }
@@ -56,16 +62,16 @@
         "fs-extra": "^4.0.2"
     },
     "devDependencies": {
-        "typescript": "^2.5.2",
-        "tslint": "^5.7.0",
-        "vscode": "^1.1.5",
-        "mocha": "^3.5.0",
-        "ts-mockito": "^2.1.1",
-        "typemoq": "^2.0.1",
-        "tmp": "^0.0.33",
-        "@types/node": "^7.0.43",
+        "@types/fs-extra": "^4.0.2",
         "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
         "@types/tmp": "^0.0.33",
-        "@types/fs-extra": "^4.0.2"
+        "mocha": "^3.5.0",
+        "tmp": "^0.0.33",
+        "ts-mockito": "^2.1.1",
+        "tslint": "^5.7.0",
+        "typemoq": "^2.0.1",
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5"
     }
 }
