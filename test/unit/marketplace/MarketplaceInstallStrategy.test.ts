@@ -26,7 +26,7 @@ suite('MarketplaceInstallStrategy', () => {
         vsixInstaller.reset();
     });
 
-    suite('isValid', () => {
+    suite('isValid()', () => {
 
         testMany(
             'should accept',
@@ -46,7 +46,7 @@ suite('MarketplaceInstallStrategy', () => {
 
     });
 
-    suite('install', () => {
+    suite('install()', () => {
 
         test('should fetch metadata, download, and install the given extension', async () => {
             const ext = new MarketplaceExtension('ext.id');

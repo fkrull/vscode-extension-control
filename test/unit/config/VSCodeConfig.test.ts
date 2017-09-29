@@ -20,30 +20,38 @@ suite('VSCodeConfig', () => {
         pathsMock.reset();
     });
 
-    test('userDirectory should return value from config.get', () => {
-        pathsMock
-            .setup((x) => x.getUserDirectory())
-            .returns(() => 'defaultPath');
-        configMock
-            .setup((x) => x.get('userDirectory', 'defaultPath'))
-            .returns(() => 'returned userDirectory');
+    suite('userDirectory', () => {
 
-        const returnedPath = vsCodeConfig.userDirectory;
+        test('should return value from config.get', () => {
+            pathsMock
+                .setup((x) => x.getUserDirectory())
+                .returns(() => 'defaultPath');
+            configMock
+                .setup((x) => x.get('userDirectory', 'defaultPath'))
+                .returns(() => 'returned userDirectory');
 
-        assert.equal(returnedPath, 'returned userDirectory');
+            const returnedPath = vsCodeConfig.userDirectory;
+
+            assert.equal(returnedPath, 'returned userDirectory');
+        });
+
     });
 
-    test('extensionDirectory should return value from config.get', () => {
-        pathsMock
-            .setup((x) => x.getExtensionDirectory())
-            .returns(() => 'defaultPath');
-        configMock
-            .setup((x) => x.get('extensionDirectory', 'defaultPath'))
-            .returns(() => 'returned extensionDirectory');
+    suite('extensionDirectory', () => {
 
-        const returnedPath = vsCodeConfig.extensionDirectory;
+        test('should return value from config.get', () => {
+            pathsMock
+                .setup((x) => x.getExtensionDirectory())
+                .returns(() => 'defaultPath');
+            configMock
+                .setup((x) => x.get('extensionDirectory', 'defaultPath'))
+                .returns(() => 'returned extensionDirectory');
 
-        assert.equal(returnedPath, 'returned extensionDirectory');
+            const returnedPath = vsCodeConfig.extensionDirectory;
+
+            assert.equal(returnedPath, 'returned extensionDirectory');
+        });
+
     });
 
 });

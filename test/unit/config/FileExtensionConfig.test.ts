@@ -9,7 +9,7 @@ import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import IJsonEntryParser from '../../../src/config/IJsonEntryParser';
 
-suite('FileExtensionConfig.getConfiguredExtensions', () => {
+suite('FileExtensionConfig.getConfiguredExtensions()', () => {
 
     let tmpdir: tmp.SynchrounousResult;
     const configMock = Mock.ofType<IConfiguration>();

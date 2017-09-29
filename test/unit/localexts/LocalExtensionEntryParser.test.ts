@@ -6,47 +6,49 @@ import { testMany } from '../../helper';
 import LocalExtension from '../../../src/localexts/LocalExtension';
 import LocalExtensionEntryParser from '../../../src/localexts/LocalExtensionEntryParser';
 
-suite('LocalExtensionEntryParser.isValid', () => {
+suite('LocalExtensionEntryParser', () => {
 
     const parser = new LocalExtensionEntryParser();
 
-    testMany(
-        'should accept',
-        (value) => parser.isValid(value),
-        [
-            ['all required fields', { id: 'ext.id', type: 'local', path: '/path' }],
-        ],
-    );
+    suite('isValid()', () => {
 
-    testMany(
-        'should not accept',
-        (value) => !parser.isValid(value),
-        [
-            ['missing id', { type: 'local', path: '/path' }],
-            ['missing type', { id: 'ext.id', path: '/path' }],
-            ['missing path', { id: 'ext.id', type: 'local' }],
-            ['a string', 'string'],
-            ['an array', ['test']],
-            ['type !== "local"', { id: 'ext.id', type: 'not-local', path: '/path' }],
-            ['id not a string', { id: 5, type: 'local', path: '/path' }],
-            ['path not a string', { id: 'ext.id', type: 'local', path: [1, 2] }],
-        ],
-    );
+        testMany(
+            'should accept',
+            (value) => parser.isValid(value),
+            [
+                ['all required fields', { id: 'ext.id', type: 'local', path: '/path' }],
+            ],
+        );
 
-});
+        testMany(
+            'should not accept',
+            (value) => !parser.isValid(value),
+            [
+                ['missing id', { type: 'local', path: '/path' }],
+                ['missing type', { id: 'ext.id', path: '/path' }],
+                ['missing path', { id: 'ext.id', type: 'local' }],
+                ['a string', 'string'],
+                ['an array', ['test']],
+                ['type !== "local"', { id: 'ext.id', type: 'not-local', path: '/path' }],
+                ['id not a string', { id: 5, type: 'local', path: '/path' }],
+                ['path not a string', { id: 'ext.id', type: 'local', path: [1, 2] }],
+            ],
+        );
 
-suite('LocalExtensionEntryParser.parse', () => {
+    });
 
-    const parser = new LocalExtensionEntryParser();
+    suite('parse()', () => {
 
-    test('should return parsed entry', () => {
-        const parsed = parser.parse({ id: 'ext.id', type: 'local', path: 'relative-path' }, 'root');
+        test('should return parsed entry', () => {
+            const parsed = parser.parse({ id: 'ext.id', type: 'local', path: 'relative-path' }, 'root');
 
-        assert.deepEqual(parsed, {
-            extensionPath: path.join('root', 'relative-path'),
-            id: 'ext.id',
-            type: 'local',
+            assert.deepEqual(parsed, {
+                extensionPath: path.join('root', 'relative-path'),
+                id: 'ext.id',
+                type: 'local',
+            });
         });
+
     });
 
 });

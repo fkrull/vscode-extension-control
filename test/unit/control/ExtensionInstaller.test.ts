@@ -5,7 +5,7 @@ import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import ExtensionInstaller from '../../../src/control/ExtensionInstaller';
 import IInstallerStrategy from '../../../src/control/IInstallerStrategy';
 
-suite('ExtensionInstaller.installExtensions', () => {
+suite('ExtensionInstaller.installExtensions()', () => {
 
     const installerStrategy1 = Mock.ofType<IInstallerStrategy<IConfiguredExtension>>();
     const installerStrategy2 = Mock.ofType<IInstallerStrategy<IConfiguredExtension>>();

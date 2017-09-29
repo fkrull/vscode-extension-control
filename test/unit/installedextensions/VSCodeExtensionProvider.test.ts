@@ -4,7 +4,7 @@ import * as typemoq from 'typemoq';
 import VSCodeExtensionProvider from '../../../src/installedextensions/VSCodeExtensionProvider';
 import { IEnv, IExtensions } from '../../../src/vscodeapi';
 
-suite('VSCodeExtensionProvider.getInstalledExtensions', () => {
+suite('VSCodeExtensionProvider.getInstalledExtensions()', () => {
 
     const appRoot = 'appRoot';
     const extsMock = typemoq.Mock.ofType<IExtensions>();

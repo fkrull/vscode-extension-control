@@ -8,7 +8,7 @@ import ExtensionControl from '../../src/ExtensionControl';
 import IInstalledExtension from '../../src/installedextensions/IInstalledExtension';
 import IInstalledExtensionProvider from '../../src/installedextensions/IInstalledExtensionProvider';
 
-suite('ExtensionControl.installMissingExtensions', () => {
+suite('ExtensionControl.installMissingExtensions()', () => {
 
     const installedExtProviderMock = typemoq.Mock.ofType<IInstalledExtensionProvider>();
     const extConfigMock = typemoq.Mock.ofType<IExtensionConfig>();

@@ -3,7 +3,7 @@ import * as assert from 'assert';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import ExtensionService from '../../../src/control/ExtensionService';
 
-suite('ExtensionService.selectExtensionsToInstall', () => {
+suite('ExtensionService.selectExtensionsToInstall()', () => {
 
     const extService = new ExtensionService();
 
