@@ -87,6 +87,36 @@ suite('extensionControl.installMissingExtensions', () => {
         assertFilesEqual(path.join(extDir, 'package.json'), path.join(extSrcDir, 'package.json'));
     });
 
+    test('should install extension from Marketplace', async () => {
+        await testctx.givenExtensionList([
+            'ms-vscode.wordcount',
+        ]);
+
+        await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
+
+        const dirs = (await fs.readdir(testctx.extDir)).filter((elem) => elem.startsWith('ms-vscode.wordcount-'));
+        for (const subdir of dirs) {
+            const pkgJSON = await fs.readJSON(path.join(testctx.extDir, subdir, 'package.json'));
+            assertIsSupersetOf(pkgJSON, {
+                name: 'wordcount',
+                displayName: 'Word Count',
+                publisher: 'ms-vscode',
+                repository: {
+                    type: 'git',
+                    url: 'https://github.com/Microsoft/vscode-wordcount.git',
+                },
+            });
+            assert.equal(subdir, `ms-vscode.wordcount-${pkgJSON.version}`);
+            const mainFile = (pkgJSON.main as string).split('/');
+            assert(
+                await fs.exists(path.join(testctx.extDir, subdir, ...mainFile)),
+                'extension main file should exist',
+            );
+            return;
+        }
+        assert.fail(undefined, undefined, 'extension should be installed');
+    });
+
 });
 
 suite('extensionControl.installMissingExtensions', () => {
@@ -108,7 +138,6 @@ suite('extensionControl.installMissingExtensions', () => {
     teardown(async () => {
         await testctx.teardown();
     });
-
 
     test('should not install extension that is already installed', async () => {
         const pkgJSON = {
