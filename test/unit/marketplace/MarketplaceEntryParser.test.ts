@@ -1,4 +1,7 @@
 import * as assert from 'assert';
+
+import { testMany } from '../../helper';
+
 import MarketplaceEntryParser from '../../../src/marketplace/MarketplaceEntryParser';
 
 suite('MarketplaceEntryParser.isValid', () => {
@@ -51,24 +54,3 @@ suite('MarketplaceEntryParser.parse', () => {
     });
 
 });
-
-function isPromise<T>(value: T | Promise<T>): value is Promise<T> {
-    return typeof (value as Promise<T>).then === 'function';
-}
-
-function testMany<T>(
-    namePrefix: string,
-    callback: (value: any) => boolean | Promise<boolean>,
-    data: Array<[string, any]>,
-) {
-    for (const [message, value] of data) {
-        test(`${namePrefix} '${message}'`, () => {
-            const ret = callback(value);
-            if (isPromise(ret)) {
-                return ret.then((isAccepted) => assert(isAccepted));
-            } else {
-                assert(ret);
-            }
-        });
-    }
-}

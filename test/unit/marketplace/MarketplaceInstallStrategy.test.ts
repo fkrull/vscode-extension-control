@@ -1,6 +1,8 @@
 import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
 
+import { testMany } from '../../helper';
+
 import IMarketplaceDownloader from '../../../src/marketplace/IMarketplaceDownloader';
 import IMarketplaceService from '../../../src/marketplace/IMarketplaceService';
 import IVsixInstaller from '../../../src/marketplace/IVsixInstaller';
@@ -68,24 +70,3 @@ suite('MarketplaceInstallStrategy', () => {
     });
 
 });
-
-function isPromise<T>(value: T | Promise<T>): value is Promise<T> {
-    return typeof (value as Promise<T>).then === 'function';
-}
-
-function testMany<T>(
-    namePrefix: string,
-    callback: (value: any) => boolean | Promise<boolean>,
-    data: Array<[string, any]>,
-) {
-    for (const [message, value] of data) {
-        test(`${namePrefix} '${message}'`, () => {
-            const ret = callback(value);
-            if (isPromise(ret)) {
-                return ret.then((isAccepted) => assert(isAccepted));
-            } else {
-                assert(ret);
-            }
-        });
-    }
-}

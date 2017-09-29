@@ -4,6 +4,8 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import { Mock } from 'typemoq';
 
+import { assertFilesEqual, testMany } from '../../helper';
+
 import IConfiguration from '../../../src/config/IConfiguration';
 import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
 import LocalExtension from '../../../src/localexts/LocalExtension';
@@ -14,25 +16,22 @@ suite('LocalExtensionInstallStrategy.isValid', () => {
     const configMock = Mock.ofType<IConfiguration>();
     const localExtStrategy = new LocalExtensionInstallStrategy(configMock.object);
 
-    const valid: Array<[string, IConfiguredExtension]> = [
-        ['a LocalExtension instance', new LocalExtension('ext.id', '/path')],
-    ];
-    const invalid: Array<[string, IConfiguredExtension]> = [
-        ['an object with type !== \'local\'', {id: 'ext.id', type: 'not-local'}],
-        ['an object with type === \'local\' that\'s not a LocalExtension instance', {id: 'ext.id', type: 'local'}],
-    ];
+    testMany(
+        'should accept',
+        (value) => localExtStrategy.isValid(value),
+        [
+            ['a LocalExtension instance', new LocalExtension('ext.id', '/path')],
+        ],
+    );
 
-    for (const [message, value] of valid) {
-        test(`should accept '${message}'`, () => {
-            assert(localExtStrategy.isValid(value));
-        });
-    }
-
-    for (const [message, value] of invalid) {
-        test(`should not accept '${message}'`, () => {
-            assert(!localExtStrategy.isValid(value));
-        });
-    }
+    testMany(
+        'should not accept',
+        (value) => !localExtStrategy.isValid(value),
+        [
+            ['an object with type !== \'local\'', {id: 'ext.id', type: 'not-local'}],
+            ['an object with type === \'local\' that\'s not a LocalExtension instance', {id: 'ext.id', type: 'local'}],
+        ],
+    );
 
 });
 
@@ -83,21 +82,3 @@ suite('LocalExtensionInstallStrategy.install', () => {
     });
 
 });
-
-function assertFilesEqual(a: string, b: string) {
-    [a, b].map((filePath) => {
-        try {
-            return fs.readFileSync(filePath).toString();
-        } catch (e) {
-            assert.fail(undefined, undefined, `exception thrown: ${e}`);
-        }
-    }).reduce((s1, s2) => {
-        if (s1 === undefined) {
-            return s2;
-        } else if (s2 === undefined) {
-            return s1;
-        }
-        assert.equal(s1, s2);
-        return s2;
-    });
-}

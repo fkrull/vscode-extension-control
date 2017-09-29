@@ -1,6 +1,7 @@
 import * as assert from 'assert';
 import * as os from 'os';
 import * as path from 'path';
+
 import DefaultPaths from '../../src/DefaultPaths';
 
 suite('DefaultPaths.getUserDirectory', () => {
@@ -31,24 +32,24 @@ suite('DefaultPaths.getUserDirectory', () => {
 
 suite('DefaultPaths.getExtensionDirectory', () => {
 
-        const homeDir = os.homedir();
+    const homeDir = os.homedir();
 
-        test('should get the default VSCode extension directory for Windows', () => {
-            const paths = new DefaultPaths('win32');
+    test('should get the default VSCode extension directory for Windows', () => {
+        const paths = new DefaultPaths('win32');
 
-            assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
-        });
-
-        test('should get the default VSCode extension directory for Linux', () => {
-            const paths = new DefaultPaths('linux');
-
-            assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
-        });
-
-        test('should get the default VSCode extension directory for macOS', () => {
-            const paths = new DefaultPaths('darwin');
-
-            assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
-        });
-
+        assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
     });
+
+    test('should get the default VSCode extension directory for Linux', () => {
+        const paths = new DefaultPaths('linux');
+
+        assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
+    });
+
+    test('should get the default VSCode extension directory for macOS', () => {
+        const paths = new DefaultPaths('darwin');
+
+        assert.strictEqual(paths.getExtensionDirectory(), path.join(homeDir, '.vscode', 'extensions'));
+    });
+
+});
