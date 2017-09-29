@@ -3,6 +3,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
+import { _setMockExtensionAPI } from '../../src/extension';
+
 class TestContext {
     public readonly extDir: string;
     public readonly userDir: string;
@@ -48,12 +50,15 @@ suite('extensionControl.installMissingExtensions', () => {
 
     const testctx = new TestContext(path.join(__dirname, '..', '..', '..'));
 
-    setup(() => {
-        return testctx.setup();
+    setup(async () => {
+        await testctx.setup();
+        _setMockExtensionAPI({
+            all: vscode.extensions.all.filter((ext) => !ext.extensionPath.startsWith(testctx.extDir)),
+        });
     });
 
-    teardown(() => {
-        return testctx.teardown();
+    teardown(async () => {
+        await testctx.teardown();
     });
 
     test('should install missing local extension in extension list', async () => {

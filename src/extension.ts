@@ -11,8 +11,14 @@ import ExtensionControl from './ExtensionControl';
 import VSCodeExtensionProvider from './installedextensions/VSCodeExtensionProvider';
 import LocalExtensionEntryParser from './localexts/LocalExtensionEntryParser';
 import LocalExtensionInstallStrategy from './localexts/LocalExtensionInstallStrategy';
+import { IExtensions } from './vscodeapi';
 
 type CommandCallback = (...args: any[]) => any;
+
+let extensionAPI: IExtensions = vscode.extensions;
+export function _setMockExtensionAPI(newExtensionAPI: IExtensions) {
+    extensionAPI = newExtensionAPI;
+}
 
 export function activate(context: vscode.ExtensionContext) {
     const config: IConfiguration = new VSCodeConfig(
@@ -22,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
     const extensionControl = new ExtensionControl(
         new VSCodeExtensionProvider(
             vscode.env.appRoot,
-            vscode.extensions,
+            extensionAPI,
         ),
         new FileExtensionConfig(
             config,
