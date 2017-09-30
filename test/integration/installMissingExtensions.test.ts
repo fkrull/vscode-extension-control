@@ -8,8 +8,8 @@ import {
     assertFileExists,
     assertFilesEqual,
     assertIsSupersetOf,
-    IntegrationTestContext,
 } from '../helper';
+import IntegrationTestContext from './IntegrationTestContext';
 
 import { _setMockExtensionList } from '../../src/extension';
 import { IExtension } from '../../src/vscodeapi';
