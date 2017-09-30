@@ -4,12 +4,12 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import { Mock } from 'typemoq';
 
-import { fail } from '../../helper';
+import { fail } from '../../../helper';
 
-import FileExtensionConfig from '../../../src/config/FileExtensionConfig';
-import IConfiguration from '../../../src/config/IConfiguration';
-import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
-import IJsonEntryParser from '../../../src/config/IJsonEntryParser';
+import FileExtensionConfig from '../../../../src/config/FileExtensionConfig';
+import IConfiguration from '../../../../src/config/IConfiguration';
+import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
+import IJsonEntryParser from '../../../../src/config/IJsonEntryParser';
 
 suite('FileExtensionConfig.getConfiguredExtensions()', () => {
 

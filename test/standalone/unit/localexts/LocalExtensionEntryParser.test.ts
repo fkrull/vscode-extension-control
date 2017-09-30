@@ -1,10 +1,10 @@
 import * as assert from 'assert';
 import * as path from 'path';
 
-import { testMany } from '../../helper';
+import { testMany } from '../../../helper';
 
-import LocalExtension from '../../../src/localexts/LocalExtension';
-import LocalExtensionEntryParser from '../../../src/localexts/LocalExtensionEntryParser';
+import LocalExtension from '../../../../src/localexts/LocalExtension';
+import LocalExtensionEntryParser from '../../../../src/localexts/LocalExtensionEntryParser';
 
 suite('LocalExtensionEntryParser', () => {
 

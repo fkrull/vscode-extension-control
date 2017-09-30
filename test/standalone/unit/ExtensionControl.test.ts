@@ -1,12 +1,12 @@
 import * as typemoq from 'typemoq';
 
-import IConfiguredExtension from '../../src/config/IConfiguredExtension';
-import IExtensionConfig from '../../src/config/IExtensionConfig';
-import IExtensionInstaller from '../../src/control/IExtensionInstaller';
-import IExtensionService from '../../src/control/IExtensionService';
-import ExtensionControl from '../../src/ExtensionControl';
-import IInstalledExtension from '../../src/installedextensions/IInstalledExtension';
-import IInstalledExtensionProvider from '../../src/installedextensions/IInstalledExtensionProvider';
+import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
+import IExtensionConfig from '../../../src/config/IExtensionConfig';
+import IExtensionInstaller from '../../../src/control/IExtensionInstaller';
+import IExtensionService from '../../../src/control/IExtensionService';
+import ExtensionControl from '../../../src/ExtensionControl';
+import IInstalledExtension from '../../../src/installedextensions/IInstalledExtension';
+import IInstalledExtensionProvider from '../../../src/installedextensions/IInstalledExtensionProvider';
 
 suite('ExtensionControl.installMissingExtensions()', () => {
 

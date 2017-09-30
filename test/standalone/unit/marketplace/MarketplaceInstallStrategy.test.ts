@@ -1,13 +1,13 @@
 import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
 
-import { testMany } from '../../helper';
+import { testMany } from '../../../helper';
 
-import IMarketplaceDownloader from '../../../src/marketplace/IMarketplaceDownloader';
-import IMarketplaceService from '../../../src/marketplace/IMarketplaceService';
-import IVsixInstaller from '../../../src/marketplace/IVsixInstaller';
-import MarketplaceExtension from '../../../src/marketplace/MarketplaceExtension';
-import MarketplaceInstallStrategy from '../../../src/marketplace/MarketplaceInstallStrategy';
+import IMarketplaceDownloader from '../../../../src/marketplace/IMarketplaceDownloader';
+import IMarketplaceService from '../../../../src/marketplace/IMarketplaceService';
+import IVsixInstaller from '../../../../src/marketplace/IVsixInstaller';
+import MarketplaceExtension from '../../../../src/marketplace/MarketplaceExtension';
+import MarketplaceInstallStrategy from '../../../../src/marketplace/MarketplaceInstallStrategy';
 
 suite('MarketplaceInstallStrategy', () => {
 

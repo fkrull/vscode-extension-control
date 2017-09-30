@@ -1,11 +1,11 @@
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
 
-import { fail } from '../../helper';
+import { fail } from '../../../helper';
 
-import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
-import ExtensionInstaller from '../../../src/control/ExtensionInstaller';
-import IInstallerStrategy from '../../../src/control/IInstallerStrategy';
+import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
+import ExtensionInstaller from '../../../../src/control/ExtensionInstaller';
+import IInstallerStrategy from '../../../../src/control/IInstallerStrategy';
 
 suite('ExtensionInstaller.installExtensions()', () => {
 

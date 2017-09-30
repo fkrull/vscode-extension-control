@@ -4,12 +4,12 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import { Mock } from 'typemoq';
 
-import { assertFilesEqual, testMany } from '../../helper';
+import { assertFilesEqual, testMany } from '../../../helper';
 
-import IConfiguration from '../../../src/config/IConfiguration';
-import IConfiguredExtension from '../../../src/config/IConfiguredExtension';
-import LocalExtension from '../../../src/localexts/LocalExtension';
-import LocalExtensionInstallStrategy from '../../../src/localexts/LocalExtensionInstallStrategy';
+import IConfiguration from '../../../../src/config/IConfiguration';
+import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
+import LocalExtension from '../../../../src/localexts/LocalExtension';
+import LocalExtensionInstallStrategy from '../../../../src/localexts/LocalExtensionInstallStrategy';
 
 suite('LocalExtensionInstallStrategy', () => {
 

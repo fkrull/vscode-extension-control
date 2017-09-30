@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 import * as typemoq from 'typemoq';
 
-import VSCodeExtensionProvider from '../../../src/installedextensions/VSCodeExtensionProvider';
-import { IEnv, IExtensions } from '../../../src/vscodeapi';
+import VSCodeExtensionProvider from '../../../../src/installedextensions/VSCodeExtensionProvider';
+import { IEnv, IExtensions } from '../../../../src/vscodeapi';
 
 suite('VSCodeExtensionProvider.getInstalledExtensions()', () => {
 

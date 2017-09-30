@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 
-import { testMany } from '../../helper';
+import { testMany } from '../../../helper';
 
-import MarketplaceEntryParser from '../../../src/marketplace/MarketplaceEntryParser';
+import MarketplaceEntryParser from '../../../../src/marketplace/MarketplaceEntryParser';
 
 suite('MarketplaceEntryParser', () => {
 
