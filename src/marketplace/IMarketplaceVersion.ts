@@ -1,4 +1,4 @@
-export default interface IVersion {
+export default interface IMarketplaceVersion {
     readonly version: string;
     readonly assetUri: string;
     readonly fallbackAssetUri: string;

@@ -1,5 +1,5 @@
-import IMarketplaceMetadata from './IMarketplaceMetadata';
+import IMarketplaceVersion from './IMarketplaceVersion';
 
 export default interface IMarketplaceDownloader {
-    download(metadata: IMarketplaceMetadata): Promise<string>;
+    download(version: IMarketplaceVersion): Promise<string>;
 }

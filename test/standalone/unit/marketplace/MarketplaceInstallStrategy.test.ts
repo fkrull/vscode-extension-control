@@ -51,15 +51,21 @@ suite('MarketplaceInstallStrategy', () => {
 
         test('should fetch metadata, download, and install the given extension', async () => {
             const ext = new MarketplaceExtension('ext.id');
-            const metadata: IMarketplaceMetadata = {
+            const version = {
+                version: '1.0.0',
+                assetUri: '/asset/uri',
+                fallbackAssetUri: '/asset/uri',
+                manifest: null,
+            };
+            const metadata = {
                 id: 'ext.id',
-                versions: [],
+                versions: [version],
             };
             marketplaceServiceMock
                 .setup((x) => x.get('ext.id'))
                 .returns(() => Promise.resolve(metadata));
             marketplaceDownloaderMock
-                .setup((x) => x.download(metadata))
+                .setup((x) => x.download(version))
                 .returns(() => Promise.resolve('/download/path'));
             vsixInstaller
                 .setup((x) => x.install(metadata, '/download/path'))

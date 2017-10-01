@@ -19,7 +19,7 @@ export default class MarketplaceInstallStrategy implements IInstallerStrategy<Ma
 
     public async install(ext: MarketplaceExtension): Promise<void> {
         const metadata = await this.marketplaceService.get(ext.id);
-        const downloadPath = await this.downloader.download(metadata);
+        const downloadPath = await this.downloader.download(metadata.versions[0]);
         await this.vsixInstaller.install(metadata, downloadPath);
     }
 
