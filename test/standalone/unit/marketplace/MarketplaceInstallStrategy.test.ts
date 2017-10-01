@@ -4,6 +4,7 @@ import { Mock, Times } from 'typemoq';
 import { testMany } from '../../../helper';
 
 import IMarketplaceDownloader from '../../../../src/marketplace/IMarketplaceDownloader';
+import IMarketplaceMetadata from '../../../../src/marketplace/IMarketplaceMetadata';
 import IMarketplaceService from '../../../../src/marketplace/IMarketplaceService';
 import IVsixInstaller from '../../../../src/marketplace/IVsixInstaller';
 import MarketplaceExtension from '../../../../src/marketplace/MarketplaceExtension';
@@ -50,7 +51,10 @@ suite('MarketplaceInstallStrategy', () => {
 
         test('should fetch metadata, download, and install the given extension', async () => {
             const ext = new MarketplaceExtension('ext.id');
-            const metadata = { id: 'ext.id' };
+            const metadata: IMarketplaceMetadata = {
+                id: 'ext.id',
+                versions: [],
+            };
             marketplaceServiceMock
                 .setup((x) => x.get('ext.id'))
                 .returns(() => Promise.resolve(metadata));
