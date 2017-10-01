@@ -14,7 +14,7 @@ import IntegrationTestContext from './IntegrationTestContext';
 import { _setMockExtensionList } from '../../src/extension';
 import { IExtension } from '../../src/vscodeapi';
 
-suite('command \'installMissingExtensions\'', () => {
+suite('command: \'installMissingExtensions\'', () => {
 
     const testctx = new IntegrationTestContext(path.join(__dirname, '..', '..', '..'));
 

@@ -59,11 +59,12 @@ export default class MarketplaceService implements IMarketplaceService {
 
     private getQueryFilter(id: string) {
         return {
-            filters: [ { criteria: [
+            filters: [{
+                criteria: [
                     VSCODE_FILTER,
                     this.getExtensionFilter(id),
-                ] },
-            ],
+                ],
+            }],
             flags: FLAGS,
         };
     }
