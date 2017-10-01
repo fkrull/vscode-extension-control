@@ -59,6 +59,7 @@
         "test-standalone": "npm run compile && node ./node_modules/mocha/bin/_mocha --recursive --colors --ui=tdd out/test/standalone"
     },
     "dependencies": {
+        "axios": "^0.16.2",
         "fs-extra": "^4.0.2"
     },
     "devDependencies": {
