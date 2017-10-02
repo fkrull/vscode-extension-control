@@ -1,5 +1,5 @@
 import IMarketplaceMetadata from './IMarketplaceMetadata';
 
 export default interface IVsixInstaller {
-    install(metadata: IMarketplaceMetadata, vsixPath: string): Promise<void>;
+    install(vsixPath: string): Promise<void>;
 }

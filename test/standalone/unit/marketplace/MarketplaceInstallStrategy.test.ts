@@ -81,7 +81,7 @@ suite('MarketplaceInstallStrategy', () => {
                 .setup((x) => x.download(version))
                 .returns(() => resolveMock(tmpfileMock));
             vsixInstaller
-                .setup((x) => x.install(metadata, '/download/path'))
+                .setup((x) => x.install('/download/path'))
                 .returns(() => Promise.resolve())
                 .verifiable(Times.once());
 

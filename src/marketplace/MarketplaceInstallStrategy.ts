@@ -23,7 +23,7 @@ export default class MarketplaceInstallStrategy implements IInstallerStrategy<Ma
         const metadata = await this.marketplaceService.get(ext.id);
         const downloadedFile = await this.downloader.download(metadata.versions[0]);
         await using(downloadedFile, () => {
-            return this.vsixInstaller.install(metadata, downloadedFile.path);
+            return this.vsixInstaller.install(downloadedFile.path);
         });
     }
 
