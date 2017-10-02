@@ -2,12 +2,9 @@ import * as assert from 'assert';
 import * as axios from 'axios';
 import { IMock, It, Mock, Times } from 'typemoq';
 
-import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
+import { resolveMock } from '../../../helper';
 
-function resolveMock<T>(mock: IMock<T>): Promise<T> {
-    mock.setup((x: any) => x.then).returns(() => undefined);
-    return Promise.resolve(mock.object);
-}
+import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
 
 suite('MarketplaceService.get', () => {
 
