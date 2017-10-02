@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
 
-import { testMany } from '../../../helper';
+import { resolveMock, testMany } from '../../../helper';
 
 import IMarketplaceDownloader from '../../../../src/marketplace/IMarketplaceDownloader';
 import IMarketplaceMetadata from '../../../../src/marketplace/IMarketplaceMetadata';
@@ -9,6 +9,7 @@ import IMarketplaceService from '../../../../src/marketplace/IMarketplaceService
 import IVsixInstaller from '../../../../src/marketplace/IVsixInstaller';
 import MarketplaceExtension from '../../../../src/marketplace/MarketplaceExtension';
 import MarketplaceInstallStrategy from '../../../../src/marketplace/MarketplaceInstallStrategy';
+import { ITempFile } from '../../../../src/using';
 
 suite('MarketplaceInstallStrategy', () => {
 
@@ -49,6 +50,12 @@ suite('MarketplaceInstallStrategy', () => {
 
     suite('install()', () => {
 
+        const tmpfileMock = Mock.ofType<ITempFile>();
+
+        setup(() => {
+            tmpfileMock.reset();
+        });
+
         test('should fetch metadata, download, and install the given extension', async () => {
             const ext = new MarketplaceExtension('ext.id');
             const version = {
@@ -61,12 +68,18 @@ suite('MarketplaceInstallStrategy', () => {
                 id: 'ext.id',
                 versions: [version],
             };
+            tmpfileMock
+                .setup((x) => x.path)
+                .returns(() => '/download/path');
+            tmpfileMock
+                .setup((x) => x.dispose())
+                .verifiable(Times.once());
             marketplaceServiceMock
                 .setup((x) => x.get('ext.id'))
                 .returns(() => Promise.resolve(metadata));
             marketplaceDownloaderMock
                 .setup((x) => x.download(version))
-                .returns(() => Promise.resolve('/download/path'));
+                .returns(() => resolveMock(tmpfileMock));
             vsixInstaller
                 .setup((x) => x.install(metadata, '/download/path'))
                 .returns(() => Promise.resolve())
@@ -74,6 +87,7 @@ suite('MarketplaceInstallStrategy', () => {
 
             await strategy.install(ext);
 
+            tmpfileMock.verifyAll();
             vsixInstaller.verifyAll();
         });
 

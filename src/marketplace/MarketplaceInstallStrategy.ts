@@ -1,3 +1,5 @@
+import { using } from '../using';
+
 import IConfiguredExtension from '../config/IConfiguredExtension';
 import IInstallerStrategy from '../control/IInstallerStrategy';
 import IMarketplaceDownloader from './IMarketplaceDownloader';
@@ -19,8 +21,10 @@ export default class MarketplaceInstallStrategy implements IInstallerStrategy<Ma
 
     public async install(ext: MarketplaceExtension): Promise<void> {
         const metadata = await this.marketplaceService.get(ext.id);
-        const downloadPath = await this.downloader.download(metadata.versions[0]);
-        await this.vsixInstaller.install(metadata, downloadPath);
+        const downloadedFile = await this.downloader.download(metadata.versions[0]);
+        await using(downloadedFile, () => {
+            return this.vsixInstaller.install(metadata, downloadedFile.path);
+        });
     }
 
 }
