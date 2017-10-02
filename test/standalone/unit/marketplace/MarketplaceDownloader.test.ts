@@ -34,7 +34,7 @@ suite('MarketplaceDownloader', () => {
     teardown(async () => {
         await Promise.all(disposables.map((disposable) => disposable.dispose()));
         disposables = [];
-    })
+    });
 
     suite('download', () => {
 
