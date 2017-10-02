@@ -34,5 +34,5 @@ export function assertDirectoryContents(path: string, contents: string[]) {
 }
 
 export function fail(message: string) {
-    assert(false, message);
+    assert.fail(undefined, undefined, message);
 }
