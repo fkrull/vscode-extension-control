@@ -14,7 +14,10 @@ import IntegrationTestContext from './IntegrationTestContext';
 import { _setMockExtensionList } from '../../src/extension';
 import { IExtension } from '../../src/vscodeapi';
 
-suite('command: \'installMissingExtensions\'', () => {
+suite('command: \'installMissingExtensions\'', function() {
+
+    this.timeout(10000);
+    this.slow(1500);
 
     const testctx = new IntegrationTestContext(path.join(__dirname, '..', '..', '..'));
 
@@ -99,7 +102,7 @@ suite('command: \'installMissingExtensions\'', () => {
         });
         assert.equal(subdir, `ms-vscode.wordcount-${pkgJSON.version}`);
         const mainFile = (pkgJSON.main as string).split('/');
-        const mainFilePath = path.join(testctx.extDir, subdir, ...mainFile);
+        const mainFilePath = `${path.join(testctx.extDir, subdir, ...mainFile)}.js`;
         assertFileExists(mainFilePath);
     });
 

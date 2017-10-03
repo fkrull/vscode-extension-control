@@ -5,8 +5,8 @@ import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
 
 suite('integration: MarketplaceService.get', function() {
 
-    this.slow(2000);
-    this.timeout(15000);
+    this.slow(1500);
+    this.timeout(10000);
 
     const service = new MarketplaceService(
         axios,
