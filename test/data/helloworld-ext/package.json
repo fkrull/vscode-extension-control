@@ -8,7 +8,7 @@
     "activationEvents": [
         "onCommand:helloworld.helloWorld"
     ],
-    "main": "./extension",
+    "main": "./out/extension",
     "contributes": {
         "commands": [
             {

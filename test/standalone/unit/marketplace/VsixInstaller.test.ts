@@ -35,7 +35,7 @@ suite('VsixInstaller.install', () => {
 
         const extDir = path.join(extensionsDir.name, 'fkrull.helloworld-0.0.1');
         assert(await fs.exists(extDir));
-        ['extension.js', 'package.json'].forEach((name) => {
+        ['package.json', path.join('out', 'extension.js')].forEach((name) => {
             assertFilesEqual(path.join(extDir, name), path.join(testPackageDir, name));
         });
     });
