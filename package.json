@@ -61,13 +61,15 @@
     "dependencies": {
         "axios": "^0.16.2",
         "fs-extra": "^4.0.2",
-        "tmp": "^0.0.33"
+        "tmp": "^0.0.33",
+        "yauzl": "^2.8.0"
     },
     "devDependencies": {
         "@types/fs-extra": "^4.0.2",
         "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
         "@types/tmp": "^0.0.33",
+        "@types/yauzl": "file:./typings/yauzl",
         "mocha": "^3.5.0",
         "ts-mockito": "^2.1.1",
         "tslint": "^5.7.0",
