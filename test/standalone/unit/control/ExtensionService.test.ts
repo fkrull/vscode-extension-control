@@ -2,13 +2,14 @@ import * as assert from 'assert';
 
 import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
 import ExtensionService from '../../../../src/control/ExtensionService';
+import IInstalledExtension from '../../../../src/installedextensions/IInstalledExtension';
 
 suite('ExtensionService.selectExtensionsToInstall()', () => {
 
     const extService = new ExtensionService();
 
     test('should return empty list if no configured extensions', async () => {
-        const configuredExts = [];
+        const configuredExts: IConfiguredExtension[] = [];
         const installedExts = [
             {id: 'ext1', extensionPath: 'ext1Path'},
         ];
@@ -22,7 +23,7 @@ suite('ExtensionService.selectExtensionsToInstall()', () => {
         const configuredExts = [
             {id: 'ext1', type: 'test'},
         ];
-        const installedExts = [];
+        const installedExts: IInstalledExtension[] = [];
 
         const extsToInstall = await extService.selectExtensionsToInstall(configuredExts, installedExts);
 
