@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
@@ -11,6 +12,11 @@ import ExtensionControl from './ExtensionControl';
 import VSCodeExtensionProvider from './installedextensions/VSCodeExtensionProvider';
 import LocalExtensionEntryParser from './localexts/LocalExtensionEntryParser';
 import LocalExtensionInstallStrategy from './localexts/LocalExtensionInstallStrategy';
+import MarketplaceDownloader from './marketplace/MarketplaceDownloader';
+import MarketplaceEntryParser from './marketplace/MarketplaceEntryParser';
+import MarketplaceInstallStrategy from './marketplace/MarketplaceInstallStrategy';
+import MarketplaceService from './marketplace/MarketplaceService';
+import VsixInstaller from './marketplace/VsixInstaller';
 import { IExtension, IExtensions } from './vscodeapi';
 
 type CommandCallback = (...args: any[]) => any;
@@ -43,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
             config,
             [
                 new LocalExtensionEntryParser(),
+                new MarketplaceEntryParser(),
             ],
         ),
         new ExtensionService(),
@@ -50,6 +57,17 @@ export function activate(context: vscode.ExtensionContext) {
             [
                 new LocalExtensionInstallStrategy(
                     config,
+                ),
+                new MarketplaceInstallStrategy(
+                    new MarketplaceService(
+                        axios,
+                    ),
+                    new MarketplaceDownloader(
+                        axios,
+                    ),
+                    new VsixInstaller(
+                        config,
+                    ),
                 ),
             ],
         ),
