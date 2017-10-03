@@ -3,7 +3,10 @@ import axios from 'axios';
 
 import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
 
-suite('integration: MarketplaceService.get', () => {
+suite('integration: MarketplaceService.get', function() {
+
+    this.slow(2000);
+    this.timeout(15000);
 
     const service = new MarketplaceService(
         axios,
@@ -20,6 +23,6 @@ suite('integration: MarketplaceService.get', () => {
         assert.equal(version.manifest.version, version.version);
         const res = await axios(`${version.assetUri}/Microsoft.VisualStudio.Code.Manifest`);
         assert.deepEqual(version.manifest, res.data);
-    }).timeout(10000);
+    });
 
 });

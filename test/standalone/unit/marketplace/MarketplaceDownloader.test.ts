@@ -9,11 +9,17 @@ import { resolveMock } from '../../../helper';
 import MarketplaceDownloader from '../../../../src/marketplace/MarketplaceDownloader';
 import { IDisposable } from '../../../../src/using';
 
-function stringStream(...chunks: string[]): NodeJS.ReadableStream {
-    const stream = new Readable();
-    stream._read = () => { /* pass */ };
-    chunks.forEach((chunk) => stream.push(chunk));
-    return stream;
+class StringStream extends Readable {
+    constructor(private readonly delay: number, private readonly text: string) {
+        super();
+    }
+
+    public _read(size: number) {
+        setTimeout(() => {
+            this.push(this.text);
+            this.emit('end');
+        }, this.delay);
+    }
 }
 
 suite('MarketplaceDownloader', () => {
@@ -38,7 +44,9 @@ suite('MarketplaceDownloader', () => {
 
     suite('download', () => {
 
-        test('should download VSIX package to temporary file', async () => {
+        test('should download VSIX package to temporary file', async function() {
+            this.slow(500);
+
             const version = {
                 version: '1.0.0',
                 assetUri: '/asset/uri',
@@ -54,7 +62,7 @@ suite('MarketplaceDownloader', () => {
                 .verifiable(Times.once());
             responseMock
                 .setup((x) => x.data)
-                .returns(() => stringStream('downloaded file contents'))
+                .returns(() => new StringStream(100, 'downloaded file contents'))
                 .verifiable(Times.once());
 
             const tmpfile = await downloader.download(version);

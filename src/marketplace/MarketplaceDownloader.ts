@@ -8,6 +8,13 @@ import IMarketplaceVersion from './IMarketplaceVersion';
 
 const VSIX_RESOURCE = '/Microsoft.VisualStudio.Services.VSIXPackage';
 
+function pipe(source: NodeJS.ReadableStream, target: NodeJS.WritableStream): Promise<void> {
+    return new Promise((resolve, reject) => {
+        source.on('end', () => resolve());
+        source.pipe(target);
+    });
+}
+
 export default class MarketplaceDownloader implements IMarketplaceDownloader {
 
     constructor(
@@ -20,7 +27,7 @@ export default class MarketplaceDownloader implements IMarketplaceDownloader {
             { responseType: 'stream' },
         );
         const tmpfile = await tempFile();
-        await response.data.pipe(fs.createWriteStream(tmpfile.path, { fd: tmpfile.fd }));
+        await pipe(response.data, fs.createWriteStream(tmpfile.path, { fd: tmpfile.fd }));
         return tmpfile;
     }
 
