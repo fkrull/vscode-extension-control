@@ -14,7 +14,7 @@ export interface IEnv {
 }
 
 export interface IWorkspaceConfiguration {
-    get<T>(section: string, defaultValue: T): T;
+    get<T>(section: string): T;
 }
 
 export interface IWorkspace {

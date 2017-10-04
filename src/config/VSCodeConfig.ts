@@ -10,11 +10,11 @@ export default class VSCodeConfig implements IConfiguration {
     ) {}
 
     public get userDirectory(): string {
-        return this.config.get('userDirectory', this.defaultUserDirectory);
+        return this.getConfigValue('userDirectory', this.defaultUserDirectory);
     }
 
     public get extensionDirectory(): string {
-        return this.config.get('extensionDirectory', this.defaultExtensionDirectory);
+        return this.getConfigValue('extensionDirectory', this.defaultExtensionDirectory);
     }
 
     private get config(): IWorkspaceConfiguration {
@@ -27,6 +27,15 @@ export default class VSCodeConfig implements IConfiguration {
 
     private get defaultExtensionDirectory(): string {
         return this.defaultPaths.getExtensionDirectory();
+    }
+
+    private getConfigValue(name: string, defaultValue: string): string {
+        const value: string | null = this.config.get(name);
+        if (!value) {
+            return defaultValue;
+        } else {
+            return value;
+        }
     }
 
 }

@@ -20,12 +20,12 @@ export class ConfigurationContext {
     private getConfigMock(): vscode.WorkspaceConfiguration {
         const mock = Mock.ofType<vscode.WorkspaceConfiguration>();
         mock
-            .setup((x) => x.get(It.isAny(), It.isAny()))
-            .returns((name, defaultValue) => {
+            .setup((x) => x.get(It.isAny()))
+            .returns((name) => {
                 if (this.settings.has(name)) {
                     return this.settings.get(name);
                 } else {
-                    return defaultValue;
+                    return undefined;
                 }
             });
         return mock.object;

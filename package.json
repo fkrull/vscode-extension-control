@@ -28,18 +28,12 @@
             "title": "Extension Control configuration",
             "properties": {
                 "extensionControl.userDirectory": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
+                    "type": ["string", "null"],
                     "default": null,
                     "description": "Path to the user directory (where extensions.json is)."
                 },
                 "extensionControl.extensionDirectory": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
+                    "type": ["string", "null"],
                     "default": null,
                     "description": "Path to the extension directory (where extensions are installed)."
                 }
