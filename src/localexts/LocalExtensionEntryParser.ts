@@ -1,8 +1,8 @@
 import * as path from 'path';
 
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IJsonEntryParser from '../config/IJsonEntryParser';
-import LocalExtension from './LocalExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IJsonEntryParser from 'config/IJsonEntryParser';
+import LocalExtension from 'localexts/LocalExtension';
 
 export default class LocalExtensionEntryParser implements IJsonEntryParser<LocalExtension> {
 

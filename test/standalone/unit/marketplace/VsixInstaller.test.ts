@@ -6,8 +6,8 @@ import { Mock } from 'typemoq';
 
 import { assertFilesEqual } from '../../../helper';
 
-import IConfiguration from '../../../../src/config/IConfiguration';
-import VsixInstaller from '../../../../src/marketplace/VsixInstaller';
+import IConfiguration from 'config/IConfiguration';
+import VsixInstaller from 'marketplace/VsixInstaller';
 
 suite('VsixInstaller.install', () => {
 

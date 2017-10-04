@@ -1,9 +1,9 @@
 import * as assert from 'assert';
 import { Mock } from 'typemoq';
 
-import VSCodeConfig from '../../../../src/config/VSCodeConfig';
-import DefaultPaths from '../../../../src/DefaultPaths';
-import { IWorkspace, IWorkspaceConfiguration } from '../../../../src/vscodeapi';
+import VSCodeConfig from 'config/VSCodeConfig';
+import DefaultPaths from 'DefaultPaths';
+import { IWorkspace, IWorkspaceConfiguration } from 'vscodeapi';
 
 suite('VSCodeConfig', () => {
 

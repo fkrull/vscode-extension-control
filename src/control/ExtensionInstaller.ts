@@ -1,6 +1,6 @@
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IExtensionInstaller from './IExtensionInstaller';
-import IInstallerStrategy from './IInstallerStrategy';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IExtensionInstaller from 'control/IExtensionInstaller';
+import IInstallerStrategy from 'control/IInstallerStrategy';
 
 export default class ExtensionInstaller implements IExtensionInstaller {
 

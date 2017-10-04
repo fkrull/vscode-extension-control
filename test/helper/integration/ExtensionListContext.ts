@@ -1,7 +1,7 @@
 import { It, Mock } from 'typemoq';
 import * as vscode from 'vscode';
 
-import { IExtension } from '../../../src/vscodeapi';
+import { IExtension } from 'vscodeapi';
 
 export class ExtensionListContext {
     public extDir: string;

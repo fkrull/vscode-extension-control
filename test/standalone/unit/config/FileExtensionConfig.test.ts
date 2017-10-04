@@ -6,10 +6,10 @@ import { Mock } from 'typemoq';
 
 import { fail } from '../../../helper';
 
-import FileExtensionConfig from '../../../../src/config/FileExtensionConfig';
-import IConfiguration from '../../../../src/config/IConfiguration';
-import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
-import IJsonEntryParser from '../../../../src/config/IJsonEntryParser';
+import FileExtensionConfig from 'config/FileExtensionConfig';
+import IConfiguration from 'config/IConfiguration';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IJsonEntryParser from 'config/IJsonEntryParser';
 
 suite('FileExtensionConfig.getConfiguredExtensions()', () => {
 

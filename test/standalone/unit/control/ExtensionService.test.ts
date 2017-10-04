@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 
-import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
-import ExtensionService from '../../../../src/control/ExtensionService';
-import IInstalledExtension from '../../../../src/installedextensions/IInstalledExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import ExtensionService from 'control/ExtensionService';
+import IInstalledExtension from 'installedextensions/IInstalledExtension';
 
 suite('ExtensionService.selectExtensionsToInstall()', () => {
 

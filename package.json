@@ -52,9 +52,10 @@
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
-        "test-standalone": "npm run compile && node ./node_modules/mocha/bin/_mocha --recursive --colors --ui=tdd out/test/standalone"
+        "test-standalone": "npm run compile && node ./node_modules/mocha/bin/_mocha --recursive --require=out/src/init-import-paths --colors --ui=tdd out/test/standalone"
     },
     "dependencies": {
+        "app-module-path": "^2.2.0",
         "axios": "^0.16.2",
         "fs-extra": "^4.0.2",
         "tmp": "^0.0.33",

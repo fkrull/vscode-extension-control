@@ -1,5 +1,5 @@
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IInstalledExtension from '../installedextensions/IInstalledExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IInstalledExtension from 'installedextensions/IInstalledExtension';
 
 export default interface IExtensionService {
     selectExtensionsToInstall(

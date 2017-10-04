@@ -2,10 +2,10 @@ import * as fs from 'fs-extra';
 import * as os from 'os';
 import * as path from 'path';
 
-import IConfiguration from './IConfiguration';
-import IConfiguredExtension from './IConfiguredExtension';
-import IExtensionConfig from './IExtensionConfig';
-import IJsonEntryParser from './IJsonEntryParser';
+import IConfiguration from 'config/IConfiguration';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IExtensionConfig from 'config/IExtensionConfig';
+import IJsonEntryParser from 'config/IJsonEntryParser';
 
 export default class FileExtensionConfig implements IExtensionConfig {
 

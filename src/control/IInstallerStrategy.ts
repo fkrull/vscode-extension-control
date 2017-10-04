@@ -1,4 +1,4 @@
-import IConfiguredExtension from '../config/IConfiguredExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
 
 export default interface IInstallerStrategy<T extends IConfiguredExtension> {
     isValid(ext: IConfiguredExtension): boolean;

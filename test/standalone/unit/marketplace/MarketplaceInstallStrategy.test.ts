@@ -3,13 +3,13 @@ import { Mock, Times } from 'typemoq';
 
 import { resolveMock, testMany } from '../../../helper';
 
-import IMarketplaceDownloader from '../../../../src/marketplace/IMarketplaceDownloader';
-import IMarketplaceMetadata from '../../../../src/marketplace/IMarketplaceMetadata';
-import IMarketplaceService from '../../../../src/marketplace/IMarketplaceService';
-import IVsixInstaller from '../../../../src/marketplace/IVsixInstaller';
-import MarketplaceExtension from '../../../../src/marketplace/MarketplaceExtension';
-import MarketplaceInstallStrategy from '../../../../src/marketplace/MarketplaceInstallStrategy';
-import { ITempFile } from '../../../../src/using';
+import IMarketplaceDownloader from 'marketplace/IMarketplaceDownloader';
+import IMarketplaceMetadata from 'marketplace/IMarketplaceMetadata';
+import IMarketplaceService from 'marketplace/IMarketplaceService';
+import IVsixInstaller from 'marketplace/IVsixInstaller';
+import MarketplaceExtension from 'marketplace/MarketplaceExtension';
+import MarketplaceInstallStrategy from 'marketplace/MarketplaceInstallStrategy';
+import { ITempFile } from 'using';
 
 suite('MarketplaceInstallStrategy', () => {
 

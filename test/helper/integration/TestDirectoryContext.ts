@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import * as vscode from 'vscode';
 
-import { IExtension } from '../../../src/vscodeapi';
+import { IExtension } from 'vscodeapi';
 
 interface ITempDir {
     readonly name: string;

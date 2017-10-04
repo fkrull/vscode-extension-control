@@ -3,8 +3,8 @@ import * as path from 'path';
 
 import { testMany } from '../../../helper';
 
-import LocalExtension from '../../../../src/localexts/LocalExtension';
-import LocalExtensionEntryParser from '../../../../src/localexts/LocalExtensionEntryParser';
+import LocalExtension from 'localexts/LocalExtension';
+import LocalExtensionEntryParser from 'localexts/LocalExtensionEntryParser';
 
 suite('LocalExtensionEntryParser', () => {
 

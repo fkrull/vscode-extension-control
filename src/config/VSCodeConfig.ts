@@ -1,6 +1,6 @@
-import DefaultPaths from '../DefaultPaths';
-import { IWorkspace, IWorkspaceConfiguration } from '../vscodeapi';
-import IConfiguration from './IConfiguration';
+import IConfiguration from 'config/IConfiguration';
+import DefaultPaths from 'DefaultPaths';
+import { IWorkspace, IWorkspaceConfiguration } from 'vscodeapi';
 
 export default class VSCodeConfig implements IConfiguration {
 

@@ -2,8 +2,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yauzl from 'yauzl';
 
-import IConfiguration from '../config/IConfiguration';
-import IVsixInstaller from './IVsixInstaller';
+import IConfiguration from 'config/IConfiguration';
+import IVsixInstaller from 'marketplace/IVsixInstaller';
 
 const EXTENSION_PREFIX = 'extension/';
 const PACKAGE_JSON_PATH = 'extension/package.json';

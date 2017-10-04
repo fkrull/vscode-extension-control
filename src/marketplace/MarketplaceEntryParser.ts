@@ -1,4 +1,4 @@
-import IJsonEntryParser from '../config/IJsonEntryParser';
+import IJsonEntryParser from 'config/IJsonEntryParser';
 import MarketplaceExtension from './MarketplaceExtension';
 
 export default class MarketplaceEntryParser implements IJsonEntryParser<MarketplaceExtension> {

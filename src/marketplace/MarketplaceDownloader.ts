@@ -1,7 +1,7 @@
 import * as axios from 'axios';
 import * as fs from 'fs-extra';
 
-import { ITempFile, tempFile } from '../using';
+import { ITempFile, tempFile } from 'using';
 
 import IMarketplaceDownloader from './IMarketplaceDownloader';
 import IMarketplaceVersion from './IMarketplaceVersion';

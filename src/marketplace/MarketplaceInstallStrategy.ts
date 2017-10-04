@@ -1,7 +1,7 @@
-import { using } from '../using';
+import { using } from 'using';
 
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IInstallerStrategy from '../control/IInstallerStrategy';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IInstallerStrategy from 'control/IInstallerStrategy';
 import IMarketplaceDownloader from './IMarketplaceDownloader';
 import IMarketplaceService from './IMarketplaceService';
 import IVsixInstaller from './IVsixInstaller';

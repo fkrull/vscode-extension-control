@@ -1,5 +1,4 @@
-import { ITempFile } from '../using';
-
+import { ITempFile } from 'using';
 import IMarketplaceVersion from './IMarketplaceVersion';
 
 export default interface IMarketplaceDownloader {

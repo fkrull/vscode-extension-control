@@ -4,7 +4,7 @@ import { Mock, Times } from 'typemoq';
 
 import { fail } from '../../helper';
 
-import { IDisposable, tempFile, using, ITempFile } from '../../../src/using';
+import { IDisposable, ITempFile, tempFile, using } from 'using';
 
 suite('using', () => {
 
@@ -72,7 +72,7 @@ suite('tempFile', () => {
         assert.equal(readback, 'test string');
     });
 
-    test('should delete temporary file on dispose', async() => {
+    test('should delete temporary file on dispose', async () => {
         tmpfile = await tempFile();
 
         assert(await fs.exists(tmpfile.path), 'temp file should exist');

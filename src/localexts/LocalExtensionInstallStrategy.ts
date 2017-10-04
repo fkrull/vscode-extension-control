@@ -1,10 +1,10 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import IConfiguration from '../config/IConfiguration';
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IInstallerStrategy from '../control/IInstallerStrategy';
-import LocalExtension from './LocalExtension';
+import IConfiguration from 'config/IConfiguration';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IInstallerStrategy from 'control/IInstallerStrategy';
+import LocalExtension from 'localexts/LocalExtension';
 
 export default class LocalExtensionInstallStrategy implements IInstallerStrategy<LocalExtension> {
 

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import axios from 'axios';
 
-import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
+import MarketplaceService from 'marketplace/MarketplaceService';
 
 suite('integration: MarketplaceService.get', function() {
 

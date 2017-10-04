@@ -1,6 +1,6 @@
-import IConfiguredExtension from '../config/IConfiguredExtension';
-import IInstalledExtension from '../installedextensions/IInstalledExtension';
-import IExtensionService from './IExtensionService';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import IExtensionService from 'control/IExtensionService';
+import IInstalledExtension from 'installedextensions/IInstalledExtension';
 
 export default class ExtensionService implements IExtensionService {
 

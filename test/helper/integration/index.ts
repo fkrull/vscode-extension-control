@@ -2,7 +2,7 @@ import { ConfigurationContext } from './ConfigurationContext';
 import { ExtensionListContext } from './ExtensionListContext';
 import { TestDirectoryContext } from './TestDirectoryContext';
 
-import { IExtension } from '../../../src/vscodeapi';
+import { IExtension } from 'vscodeapi';
 
 export class IntegrationTestContext {
     private readonly dirs: TestDirectoryContext;

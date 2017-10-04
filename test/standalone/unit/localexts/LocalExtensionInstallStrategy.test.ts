@@ -6,10 +6,10 @@ import { Mock } from 'typemoq';
 
 import { assertFilesEqual, testMany } from '../../../helper';
 
-import IConfiguration from '../../../../src/config/IConfiguration';
-import IConfiguredExtension from '../../../../src/config/IConfiguredExtension';
-import LocalExtension from '../../../../src/localexts/LocalExtension';
-import LocalExtensionInstallStrategy from '../../../../src/localexts/LocalExtensionInstallStrategy';
+import IConfiguration from 'config/IConfiguration';
+import IConfiguredExtension from 'config/IConfiguredExtension';
+import LocalExtension from 'localexts/LocalExtension';
+import LocalExtensionInstallStrategy from 'localexts/LocalExtensionInstallStrategy';
 
 suite('LocalExtensionInstallStrategy', () => {
 

@@ -1,4 +1,4 @@
-import IConfiguredExtension from './IConfiguredExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
 
 export default interface IExtensionConfig {
     getConfiguredExtensions(): Promise<IConfiguredExtension[] | undefined>;

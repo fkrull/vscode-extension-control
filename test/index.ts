@@ -10,6 +10,8 @@
 // to report the results back to the caller. When the tests are finished, return
 // a possible error to the callback or null if none.
 
+import '../src/init-import-paths';
+
 import * as testRunner from 'vscode/lib/testrunner';
 
 // You can directly control Mocha options by uncommenting the following lines

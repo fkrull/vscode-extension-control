@@ -1,4 +1,4 @@
-import IConfiguredExtension from '../config/IConfiguredExtension';
+import IConfiguredExtension from 'config/IConfiguredExtension';
 
 export default class MarketplaceExtension implements IConfiguredExtension {
     public readonly type: 'marketplace';

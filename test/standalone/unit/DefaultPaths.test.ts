@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import * as os from 'os';
 import * as path from 'path';
 
-import DefaultPaths from '../../../src/DefaultPaths';
+import DefaultPaths from 'DefaultPaths';
 
 suite('DefaultPaths', () => {
 

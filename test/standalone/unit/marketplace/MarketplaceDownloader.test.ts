@@ -6,8 +6,8 @@ import { Mock, Times } from 'typemoq';
 
 import { resolveMock } from '../../../helper';
 
-import MarketplaceDownloader from '../../../../src/marketplace/MarketplaceDownloader';
-import { IDisposable } from '../../../../src/using';
+import MarketplaceDownloader from 'marketplace/MarketplaceDownloader';
+import { IDisposable } from 'using';
 
 class StringStream extends Readable {
     constructor(private readonly delay: number, private readonly text: string) {

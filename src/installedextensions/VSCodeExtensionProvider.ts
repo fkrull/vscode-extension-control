@@ -1,6 +1,6 @@
-import { IExtensions } from '../vscodeapi';
-import IInstalledExtension from './IInstalledExtension';
-import IInstalledExtensionProvider from './IInstalledExtensionProvider';
+import IInstalledExtension from 'installedextensions/IInstalledExtension';
+import IInstalledExtensionProvider from 'installedextensions/IInstalledExtensionProvider';
+import { IExtensions } from 'vscodeapi';
 
 export default class VSCodeExtensionProvider implements IInstalledExtensionProvider {
 

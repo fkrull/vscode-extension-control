@@ -4,7 +4,7 @@ import { IMock, It, Mock, Times } from 'typemoq';
 
 import { resolveMock } from '../../../helper';
 
-import MarketplaceService from '../../../../src/marketplace/MarketplaceService';
+import MarketplaceService from 'marketplace/MarketplaceService';
 
 suite('MarketplaceService.get', () => {
 

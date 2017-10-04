@@ -30,7 +30,7 @@
             "name": "Launch Tests (standalone)",
             "type": "node",
             "request": "launch",
-            "args": ["./node_modules/mocha/bin/_mocha", "--recursive", "--colors", "--ui=tdd", "out/test/standalone"],
+            "args": ["./node_modules/mocha/bin/_mocha", "--recursive", "--require=out/src/init-import-paths", "--colors", "--ui=tdd", "out/test/standalone"],
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
