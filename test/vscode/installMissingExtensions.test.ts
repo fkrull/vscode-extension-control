@@ -11,7 +11,6 @@ import {
 } from '../helper';
 import IntegrationTestContext from './IntegrationTestContext';
 
-import { _setMockExtensionList } from '../../src/extension';
 import { IExtension } from '../../src/vscodeapi';
 
 suite('command: \'installMissingExtensions\'', function() {

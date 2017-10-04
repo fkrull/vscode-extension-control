@@ -2,7 +2,6 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-import { _setMockExtensionList } from '../../src/extension';
 import { IExtension } from '../../src/vscodeapi';
 
 export default class IntegrationTestContext {
@@ -32,7 +31,16 @@ export default class IntegrationTestContext {
     }
 
     public givenAdditionalInstalledExtensions(...additionalExtensions: Array<IExtension<any>>) {
-        _setMockExtensionList(this.getRealExtensions().concat(additionalExtensions));
+        const exts = this.getFullExtensionList(additionalExtensions);
+        (vscode as any).extensions = new Proxy(vscode.extensions, {
+            get(target, property, receiver) {
+                if (property === 'all') {
+                    return exts;
+                } else {
+                    return target[property];
+                }
+            },
+        });
     }
 
     public async givenExtensionList(exts: any[]) {
@@ -50,7 +58,20 @@ export default class IntegrationTestContext {
         );
     }
 
-    private getRealExtensions(): Array<IExtension<any>> {
+    private getFullExtensionList(additionalExtensions: Array<IExtension<any>>): Array<vscode.Extension<any>> {
+        return this.getRealExtensions().concat(additionalExtensions.map((ext) => {
+            return {
+                id: ext.id,
+                extensionPath: ext.extensionPath,
+                isActive: false,
+                packageJSON: null,
+                exports: null,
+                activate: () => Promise.resolve(),
+            };
+        }));
+    }
+
+    private getRealExtensions(): Array<vscode.Extension<any>> {
         return vscode.extensions.all.filter((ext) => !ext.extensionPath.startsWith(this.extDir));
     }
 
