@@ -4,19 +4,16 @@ import * as vscode from 'vscode';
 import { IExtension } from '../../../src/vscodeapi';
 
 export class ExtensionListContext {
+    public extDir: string;
     private readonly originalExtensionsAPI = vscode.extensions;
     private extensionList: Array<vscode.Extension<any>> = [];
-
-    constructor(
-        private readonly extDir: string,
-        private readonly userDir: string,
-    ) {}
 
     public givenAdditionalInstalledExtensions(...additionalExtensions: Array<IExtension<any>>) {
         this.extensionList = this.getCombinedExtensionList(additionalExtensions);
     }
 
-    public async setup() {
+    public async setup(extDir: string) {
+        this.extDir = extDir;
         (vscode as any).extensions = this.getExtensionsMock();
     }
 

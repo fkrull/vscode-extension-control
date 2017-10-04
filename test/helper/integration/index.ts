@@ -9,16 +9,15 @@ export class IntegrationTestContext {
     private readonly exts: ExtensionListContext;
     private readonly cfg: ConfigurationContext;
 
-    constructor(basedir: string) {
-        this.dirs = new TestDirectoryContext(basedir);
-
-        this.exts = new ExtensionListContext(this.extDir, this.userDir);
+    constructor() {
+        this.dirs = new TestDirectoryContext();
+        this.exts = new ExtensionListContext();
         this.cfg = new ConfigurationContext();
     }
 
     public async setup() {
         await this.dirs.setup();
-        await this.exts.setup();
+        await this.exts.setup(this.extDir);
         await this.cfg.setup();
         this.cfg.givenConfiguration(new Map([
             ['userDirectory', this.dirs.userDir],

@@ -31,7 +31,7 @@ suite('command: \'installMissingExtensions\'', function() {
     this.timeout(10000);
     this.slow(1500);
 
-    const testctx = new IntegrationTestContext(path.join(__dirname, '..', '..', '..'));
+    const testctx = new IntegrationTestContext();
 
     setup(async () => {
         await testctx.setup();

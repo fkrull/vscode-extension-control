@@ -19,9 +19,7 @@
             "runtimeExecutable": "${execPath}",
             "args": [
                 "--extensionDevelopmentPath=${workspaceRoot}",
-                "--extensionTestsPath=${workspaceRoot}/out/test",
-                "--extensions-dir=${workspaceRoot}/.integration/extensions",
-                "--user-data-dir=${workspaceRoot}/.integration/data"
+                "--extensionTestsPath=${workspaceRoot}/out/test"
             ],
             "stopOnEntry": false,
             "sourceMaps": true,
