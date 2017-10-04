@@ -9,9 +9,22 @@ import {
     assertFilesEqual,
     assertIsSupersetOf,
 } from '../helper';
-import IntegrationTestContext from './IntegrationTestContext';
+import { IntegrationTestContext } from '../helper/integration';
 
-import { IExtension } from '../../src/vscodeapi';
+async function givenExtensionList(userDir: string, exts: any[]) {
+    await fs.writeJSON(
+        path.join(userDir, 'extensions.json'),
+        exts,
+    );
+}
+
+async function givenSimpleLocalExtension(userDir: string, folder: string, json: any) {
+    await fs.mkdirp(path.join(userDir, 'Extensions', folder));
+    await fs.writeJSON(
+        path.join(userDir, 'Extensions', folder, 'package.json'),
+        json,
+    );
+}
 
 suite('command: \'installMissingExtensions\'', function() {
 
@@ -43,8 +56,8 @@ suite('command: \'installMissingExtensions\'', function() {
             publisher: 'not',
             version: '0.0.1',
         };
-        await testctx.givenSimpleLocalExtension('not-installed', pkgJSON);
-        await testctx.givenExtensionList([
+        await givenSimpleLocalExtension(testctx.userDir, 'not-installed', pkgJSON);
+        await givenExtensionList(testctx.userDir, [
             {
                 id: 'not.installed',
                 path: 'Extensions/not-installed',
@@ -65,8 +78,8 @@ suite('command: \'installMissingExtensions\'', function() {
             publisher: 'already',
             version: '0.0.1',
         };
-        await testctx.givenSimpleLocalExtension('already-installed', pkgJSON);
-        await testctx.givenExtensionList([
+        await givenSimpleLocalExtension(testctx.userDir, 'already-installed', pkgJSON);
+        await givenExtensionList(testctx.userDir, [
             {
                 id: 'already.installed',
                 path: 'Extensions/already-installed',
@@ -80,7 +93,7 @@ suite('command: \'installMissingExtensions\'', function() {
     });
 
     test('should install extension from Marketplace', async () => {
-        await testctx.givenExtensionList([
+        await givenExtensionList(testctx.userDir, [
             'ms-vscode.wordcount',
         ]);
 
