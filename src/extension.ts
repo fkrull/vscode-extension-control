@@ -62,6 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     registerCommand(context, 'extensionControl.installMissingExtensions', async () => {
         await extensionControl.installMissingExtensions();
+        await vscode.window.showInformationMessage('Missing extensions installed');
     });
 }
 
