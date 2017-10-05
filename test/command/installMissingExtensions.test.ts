@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { It, Mock, Times } from 'typemoq';
 
 import {
     assertDirectoryContents,
@@ -32,8 +33,13 @@ suite('command: \'installMissingExtensions\'', function() {
     this.slow(1500);
 
     const testctx = new IntegrationTestContext();
+    const windowMock = Mock.ofType<typeof vscode.window>();
 
     setup(async () => {
+
+        (vscode as any).window = windowMock.object;
+        windowMock.reset();
+
         await testctx.setup();
         testctx.givenAdditionalInstalledExtensions(
             {
@@ -67,6 +73,7 @@ suite('command: \'installMissingExtensions\'', function() {
 
         await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
 
+        windowMock.verify((x) => x.showInformationMessage(It.isAnyString()), Times.once());
         const extSrcDir = path.join(testctx.userDir, 'Extensions', 'not-installed');
         const extDir = path.join(testctx.extDir, 'not.installed');
         assertFilesEqual(path.join(extDir, 'package.json'), path.join(extSrcDir, 'package.json'));
@@ -89,6 +96,7 @@ suite('command: \'installMissingExtensions\'', function() {
 
         await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
 
+        windowMock.verify((x) => x.showInformationMessage(It.isAnyString()), Times.once());
         assertDirectoryContents(testctx.extDir, []);
     });
 
@@ -99,6 +107,7 @@ suite('command: \'installMissingExtensions\'', function() {
 
         await vscode.commands.executeCommand('extensionControl.installMissingExtensions');
 
+        windowMock.verify((x) => x.showInformationMessage(It.isAnyString()), Times.once());
         const dirs = (await fs.readdir(testctx.extDir)).filter((elem) => elem.startsWith('ms-vscode.wordcount-'));
         assert.equal(dirs.length, 1);
         const subdir = dirs[0];
