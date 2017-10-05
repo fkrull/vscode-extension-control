@@ -3,7 +3,9 @@
 out/test/**
 test/**
 src/**
+typings/**
 **/*.map
 .gitignore
+.travis.yml
 tsconfig.json
 tslint.json
