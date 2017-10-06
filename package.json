@@ -3,19 +3,17 @@
     "publisher": "fkrull",
     "displayName": "Extension Control",
     "version": "0.1.0",
-    "description": "A better way to manage VS Code extensions",
+    "description": "Declarative extension management for VS Code",
     "license": "BSD-2-Clause",
     "author": {
         "name": "Felix Krull"
     },
-
     "homepage": "https://github.com/fkrull/vscode-extension-control",
     "bugs": "https://github.com/fkrull/vscode-extension-control/issues",
     "repository": {
         "type": "git",
         "url": "https://github.com/fkrull/vscode-extension-control.git"
     },
-
     "engines": {
         "vscode": "^1.16.0"
     },
@@ -29,7 +27,6 @@
             "description": "Build Status"
         }
     ],
-
     "main": "./out/src/extension",
     "activationEvents": [
         "onCommand:extensionControl.installMissingExtensions"
@@ -47,19 +44,24 @@
             "title": "Extension Control configuration",
             "properties": {
                 "extensionControl.userDirectory": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
                     "description": "Path to the user directory (where extensions.json is)."
                 },
                 "extensionControl.extensionDirectory": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
                     "description": "Path to the extension directory (where extensions are installed)."
                 }
             }
         }
     },
-
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
@@ -68,7 +70,6 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
         "test-standalone": "npm run compile && node ./node_modules/mocha/bin/_mocha --recursive --require=out/src/init-import-paths --colors --ui=tdd out/test/standalone"
     },
-
     "dependencies": {
         "app-module-path": "^2.2.0",
         "axios": "^0.16.2",
