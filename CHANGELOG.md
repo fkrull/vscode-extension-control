@@ -1,6 +1,6 @@
 # Change Log for Extension Control
 
-## 0.1.0 [TBD]
+## 0.1.0 [2017-10-07]
 - First rewrite. This version provides a limited feature set and basically no
   error handling.
   * Supported commands: `installMissingExtensions`
