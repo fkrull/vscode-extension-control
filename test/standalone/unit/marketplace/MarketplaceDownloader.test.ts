@@ -42,7 +42,7 @@ suite('MarketplaceDownloader', () => {
         disposables = [];
     });
 
-    suite('download', () => {
+    suite('download()', () => {
 
         test('should download VSIX package to temporary file', async function() {
             this.slow(500);

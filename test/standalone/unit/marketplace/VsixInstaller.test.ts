@@ -30,14 +30,18 @@ suite('VsixInstaller.install', () => {
         extensionsDir.removeCallback();
     });
 
-    test('should unpack package into extensions folder', async () => {
-        await installer.install(testPackage);
+    suite('install()', () => {
 
-        const extDir = path.join(extensionsDir.name, 'fkrull.helloworld-0.0.1');
-        assert(await fs.exists(extDir));
-        ['package.json', path.join('out', 'extension.js')].forEach((name) => {
-            assertFilesEqual(path.join(extDir, name), path.join(testPackageDir, name));
+        test('should unpack package into extensions folder', async () => {
+            await installer.install(testPackage);
+
+            const extDir = path.join(extensionsDir.name, 'fkrull.helloworld-0.0.1');
+            assert(await fs.exists(extDir));
+            ['package.json', path.join('out', 'extension.js')].forEach((name) => {
+                assertFilesEqual(path.join(extDir, name), path.join(testPackageDir, name));
+            });
         });
+
     });
 
 });

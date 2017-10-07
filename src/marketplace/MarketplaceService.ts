@@ -43,18 +43,15 @@ export default class MarketplaceService implements IMarketplaceService {
         };
     }
 
-    private getVersions(res: any): Promise<IMarketplaceVersion[]> {
-        return Promise.all(
-            (res.versions as any[]).map(async (v) => {
-                const response = await this.axiosInstance.get(`${v.assetUri}${MANIFEST_RESOURCE}`);
-                return {
-                    version: v.version,
-                    assetUri: v.assetUri,
-                    fallbackAssetUri: v.fallbackAssetUri,
-                    manifest: response.data,
-                };
-            }),
-        );
+    private async getVersions(res: any): Promise<IMarketplaceVersion[]> {
+        const version = res.versions[0];
+        const response = await this.axiosInstance.get(`${version.assetUri}${MANIFEST_RESOURCE}`);
+        return [{
+            version: version.version,
+            assetUri: version.assetUri,
+            fallbackAssetUri: version.fallbackAssetUri,
+            manifest: response.data,
+        }];
     }
 
     private getQueryFilter(id: string) {
