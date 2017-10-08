@@ -1,6 +1,6 @@
 # Change Log for Extension Control
 
-## 0.1.1 [TBD]
+## 0.1.1 [2017-10-08]
 - Bug fixes:
   * Fix installing extensions with very old versions (?), e.g. `eg2.tslint`.
 
