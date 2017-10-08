@@ -1,23 +1,47 @@
 import IConfiguredExtension from 'config/IConfiguredExtension';
-import IExtensionInstaller from 'control/IExtensionInstaller';
-import IInstallerStrategy from 'control/IInstallerStrategy';
+import { IExtensionInstaller, IInstallResult } from 'control/IExtensionInstaller';
+import { IGenericInstallerStrategy } from 'control/IInstallerStrategy';
 
 export default class ExtensionInstaller implements IExtensionInstaller {
 
     constructor(
-        private readonly installerStrategies: Array<IInstallerStrategy<any>>,
+        private readonly installerStrategies: IGenericInstallerStrategy[],
     ) {}
 
-    public async installExtensions(extensions: IConfiguredExtension[]): Promise<void> {
-        const promises = extensions.map((ext) => {
-            for (const installer of this.installerStrategies) {
-                if (installer.isValid(ext)) {
-                    return installer.install(ext);
-                }
-            }
+    public installExtensions(extensions: IConfiguredExtension[]): Promise<IInstallResult[]> {
+        return Promise.all(extensions.map((ext) => this.installExtension(ext)));
+    }
+
+    private installExtension(ext: IConfiguredExtension): Promise<IInstallResult> {
+        const installer = this.getInstallerStrategy(ext);
+        if (installer !== undefined) {
+            return this.performInstallation(ext, installer);
+        } else {
+            // This is a configuration/coding error, not an expected runtime failure.
+            // Accordingly, it doesn't get the IInstallResult treatment.
             throw new Error(`no installer for type '${ext.type}'`);
-        });
-        await Promise.all(promises);
+        }
+    }
+
+    private getInstallerStrategy(ext: IConfiguredExtension): IGenericInstallerStrategy | undefined {
+        for (const installer of this.installerStrategies) {
+            if (installer.isValid(ext)) {
+                return installer;
+            }
+        }
+        return undefined;
+    }
+
+    private async performInstallation(
+        ext: IConfiguredExtension,
+        installer: IGenericInstallerStrategy,
+    ): Promise<IInstallResult> {
+        try {
+            await installer.install(ext);
+            return { successful: true, ext };
+        } catch (error) {
+            return { successful: false, ext, error };
+        }
     }
 
 }

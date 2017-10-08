@@ -5,12 +5,12 @@ import { fail } from '../../../helper';
 
 import IConfiguredExtension from 'config/IConfiguredExtension';
 import ExtensionInstaller from 'control/ExtensionInstaller';
-import IInstallerStrategy from 'control/IInstallerStrategy';
+import { IGenericInstallerStrategy } from 'control/IInstallerStrategy';
 
 suite('ExtensionInstaller.installExtensions()', () => {
 
-    const installerStrategy1 = Mock.ofType<IInstallerStrategy<IConfiguredExtension>>();
-    const installerStrategy2 = Mock.ofType<IInstallerStrategy<IConfiguredExtension>>();
+    const installerStrategy1 = Mock.ofType<IGenericInstallerStrategy>();
+    const installerStrategy2 = Mock.ofType<IGenericInstallerStrategy>();
     const extInstaller = new ExtensionInstaller([
         installerStrategy1.object,
         installerStrategy2.object,
@@ -59,6 +59,25 @@ suite('ExtensionInstaller.installExtensions()', () => {
             return;
         }
         fail('should throw error for unknown type');
+    });
+
+    test('should return array of successes and failures', async () => {
+        installerStrategy1
+            .setup((x) => x.install(It.isObjectWith<IConfiguredExtension>({ id: 'ok' })))
+            .returns(() => Promise.resolve());
+        installerStrategy1
+            .setup((x) => x.install(It.isObjectWith<IConfiguredExtension>({ id: 'error' })))
+            .returns(() => Promise.reject(new Error('error message')));
+
+        const results = await extInstaller.installExtensions([
+            { type: 'test1', id: 'ok' },
+            { type: 'test1', id: 'error' },
+        ]);
+
+        assert.deepEqual(results, [
+            { successful: true, ext: { id: 'ok', type: 'test1' } },
+            { successful: false, ext: { id: 'error', type: 'test1' }, error: new Error('error message') },
+        ]);
     });
 
 });

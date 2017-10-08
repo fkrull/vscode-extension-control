@@ -2,7 +2,7 @@ import * as typemoq from 'typemoq';
 
 import IConfiguredExtension from 'config/IConfiguredExtension';
 import IExtensionConfig from 'config/IExtensionConfig';
-import IExtensionInstaller from 'control/IExtensionInstaller';
+import { IExtensionInstaller } from 'control/IExtensionInstaller';
 import IExtensionService from 'control/IExtensionService';
 import ExtensionControl from 'ExtensionControl';
 import IInstalledExtension from 'installedextensions/IInstalledExtension';
