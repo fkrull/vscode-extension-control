@@ -83,7 +83,6 @@
         "@types/node": "^7.0.43",
         "@types/tmp": "^0.0.33",
         "mocha": "^3.5.0",
-        "ts-mockito": "^2.1.1",
         "tslint": "^5.7.0",
         "typemoq": "^2.0.1",
         "typescript": "^2.5.2",
